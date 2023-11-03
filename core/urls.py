@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from core.views import portal_aealmancil
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', portal_aealmancil, name='portal_aealmancil'),
 ]

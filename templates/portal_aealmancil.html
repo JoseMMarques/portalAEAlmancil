@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Portal AEAlmancil</title>
+
+    <link rel="icon" href="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" sizes="any" type="image/svg+xml">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'adminLTE/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'adminLTE/css/adminlte.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- ToastsR -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'AdminLTE/plugins/toastr/toastr.css' %}" media="all">
+    <script type="text/javascript" src="{% static 'AdminLTE/plugins/toastr/toastr.min.js' %}"></script>
+    <style>
+        .center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .responsive {
+            width: 100%;
+            height: auto;
+        }
+
+        {#https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_center-vertical2#}
+    </style>
+
+</head>
+<body class="hold-transition layout-top-nav layout-footer-fixed">
+
+<!-- Mensagens do Django -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'info' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'warning' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'error' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+        <div class="container">
+            <a href="{% url 'portal_aealmancil' %}" class="navbar-brand">
+                <img src="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" alt="r+Prof Logo"
+                     class="brand-image img-fluid elevation-3"
+                     style="opacity: .8">
+                <span class="brand-text font-weight-light">Portal do Agrupamento de Escolas de Almancil</span>
+            </a>
+
+{#            <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"#}
+{#                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">#}
+{#                <span class="navbar-toggler-icon"></span>#}
+{#            </button>#}
+
+            <!-- Right navbar links -->
+            <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'portal_aealmancil' %}" class="nav-link">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- /.background image -->
+    <div>
+        <div class="img-responsive" >
+            <img style="width: 100%;height: 100%" src="{% static 'portalAEAlmancil/img/portal_aealmancil_crop.jpg' %}"
+                 alt="Responsive image" class="img-responsive">
+        </div>
+    </div>
+    <!-- /.background image -->
+
+    <!-- Main Footer -->
+    {% block footer %}
+
+        {% include 'footer.html' %}
+
+    {% endblock %}
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'adminLTE/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminLTE/js/adminlte.min.js' %}"></script>
+</body>
+</html>
