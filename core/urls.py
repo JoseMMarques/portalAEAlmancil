@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import portal_aealmancil
+from core.views import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', portal_aealmancil, name='portal_aealmancil'),
+    path('login/', login_view, name='login'),
 ]

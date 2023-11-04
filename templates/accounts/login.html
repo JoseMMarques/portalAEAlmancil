@@ -2,13 +2,13 @@
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-PT" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>AEAlmancil | Portal</title>
+    <title>AEAlmancil | Login</title>
 
     <link rel="icon" href="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" sizes="any" type="image/svg+xml">
 
@@ -28,19 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'AdminLTE/plugins/toastr/toastr.css' %}" media="all">
     <script type="text/javascript" src="{% static 'AdminLTE/plugins/toastr/toastr.min.js' %}"></script>
     <style>
-
-        /* Bottom right text */
-        .text-block {
-          position: absolute;
-          bottom: 90px;
-          left: 50px;
-          background-color: black;
-          color: white;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-
-         body, html {
+        body, html {
           height: 100%;
         }
 
@@ -57,11 +45,12 @@
 
           /* Center and scale the image nicely */
           width: 100vw;
-          height: 100vh;
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-          position: relative;
+height: 100vh;
+background-size: 100% 100%;
+background-repeat: no-repeat;
+position: relative;
         }
+
     </style>
 
 </head>
@@ -82,8 +71,8 @@
         {% endfor %}
     {% endif %}
 
+    <!-- div wrapper -->
     <div class="wrapper bg-img">
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
@@ -94,22 +83,71 @@
                     <span class="brand-text ">Portal do Agrupamento de Escolas de Almancil</span>
                 </a>
 
-                <!-- Right navbar links -->
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-                    <li class="nav-item">
-                        <a href="{% url 'login' %}" class="btn btn-primary btn-block">Login</a>
-                    </li>
-                </ul>
+
             </div>
         </nav>
         <!-- /.navbar -->
 
-        <!-- Texto em cima da imagem -->
-        <div class="text-block">
-            <h4>Portal do Agrupamento de Escolas de Almancil</h4>
-            <p>O melhor agrupamento do país</p>
+        <!-- div container -->
+        <div class="container ">
+
+            <!-- /.login-box -->
+            <div class="login-box">
+            <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <!-- /.login-logo -->
+                <div class="card">
+                    <!-- /.login-card-body -->
+                    <div class="card-body login-card-body">
+
+                        <h3 class="login-box-msg">Iniciar Sessão</h3>
+
+                        <form method="post" class="containere">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                {% render_field form.username class="form-control" placeholder="Email ou Username" %}
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                {% render_field form.password class="form-control" placeholder="Password" %}
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sessão</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </form>
+
+                        <div class="social-auth-links text-center mb-3">
+                            <p>- OU -</p>
+                        </div>
+
+                        <p class="row justify-content-center">
+                            <a href="{% url 'portal_aealmancil' %}">Recupere a password</a>
+                        </p>
+                    </div>
+                    <!-- /.login-card-body -->
+                </div>
+            </div>
+            <!-- /.login-box -->
+
         </div>
-        <!-- Texto em cima da imagem -->
+        <!-- div container -->
 
         <!-- Main Footer -->
         {% block footer %}
@@ -118,15 +156,16 @@
         <!-- Main Footer -->
 
     </div>
-    <!-- ./wrapper -->
+    <!-- div wrapper -->
 
-    <!-- REQUIRED SCRIPTS -->
+
     <!-- jQuery -->
-    <script src="{% static 'adminLTE/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'AdminLTE/plugins/jquery/jquery.min.js' %}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{% static 'adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- AdminLTE App -->
-    <script src="{% static 'adminLTE/js/adminlte.min.js' %}"></script>
+    <script src="{% static 'AdminLTE/js/adminlte.min.js' %}"></script>
+    <!-- jQuery -->
 
 </body>
 </html>
