@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <!-- character encoding for the HTML document - UTF-8 character set, covers almost all of the characters and symbols -->
+    <!-- in the world! -->
+    <meta charset="utf-8">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The X-UA-Compatible meta tag allows to choose what version of Internet Explorer the page should be rendered as -->
+    <!-- edge mode tells Internet Explorer to display content in the highest mode available -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- title tab -->
+    <title>AEAlmancil | Plataforma</title>
+
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'adminLTE/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'adminLTE/css/adminlte.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- GAME style -->
+    <link rel="stylesheet" href="{% static 'portalAEAlmancil/css/r+prof.css' %}">
+
+    <!-- Plataforma AEAlmancil style -->
+    <link rel="icon" href="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" sizes="any" type="image/svg+xml">
+
+    <!-- ToastsR -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'adminLTE/plugins/toastr/toastr.css' %}" media="all">
+    <script type="text/javascript" src="{% static 'adminLTE/plugins/toastr/toastr.min.js' %}"></script>
+
+</head>
+<body class="layout-top-nav layout-footer-fixed">
+
+<!-- Mensagens do Django -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'info' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'warning' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'error' %}
+            <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{% url 'user_homepage' %}" class="navbar-brand">
+                    <img src="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" alt="plataforma Logo"
+                         class="brand-image img-push elevation-3"
+                         style="opacity: .8">
+                    <span class="brand-text font-weight-light"><strong>Plataforma Digital do Agrupamento de Escolas de Almancil</strong></span>
+                </a>
+            </li>
+
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- user -->
+            <li class="nav-item">
+                <i class="nav-link">
+                   Utilizador:<b> {{request.user.get_first_name}} {{ request.user.get_last_name }}</b>
+                </i>
+            </li>
+
+
+            <!-- Settings dropdown -->
+            <li class="nav-item dropdown show ">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                    <i class="fas fa-cog"></i>
+                </a>
+                <div class="dropdown-menu hide" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-5px, 40px, 0px);">
+                    <a class="dropdown-item" tabindex="-1" href="{% url 'users:change_password' %}">Alterar Password</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+            </li>
+
+            <!-- End Settings dropdown -->
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    {% block sidebar %}
+    {% endblock %}
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    {% block footer %}
+        {% include 'core/footer.html' %}
+    {% endblock %}
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'adminLTE/plugins/jquery/jquery.min.js' %}"></script>
+<!-- my jQuery -->
+
+<!-- Bootstrap 4 -->
+<script src="{% static 'adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminLTE/js/adminlte.min.js' %}"></script>
+</body>
+</html>

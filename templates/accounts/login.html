@@ -76,8 +76,8 @@ position: relative;
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
-                <a href="{% url 'portal_aealmancil' %}" class="navbar-brand">
-                    <img src="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" alt="r+Prof Logo"
+                <a href="{% url 'user_homepage' %}" class="navbar-brand">
+                    <img src="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" alt="PlataformaAEA Logo"
                          class="brand-image img-fluid elevation-3"
                          style="opacity: 3">
                     <span class="brand-text ">Portal do Agrupamento de Escolas de Almancil</span>
@@ -138,7 +138,7 @@ position: relative;
                         </div>
 
                         <p class="row justify-content-center">
-                            <a href="{% url 'portal_aealmancil' %}">Recupere a password</a>
+                            <a href="{% url 'user_homepage' %}">Recupere a password</a>
                         </p>
                     </div>
                     <!-- /.login-card-body -->
@@ -151,7 +151,7 @@ position: relative;
 
         <!-- Main Footer -->
         {% block footer %}
-            {% include 'footer.html' %}
+            {% include 'core/footer.html' %}
         {% endblock %}
         <!-- Main Footer -->
 

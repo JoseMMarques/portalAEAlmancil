@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>AEAlmancil | Portal</title>
+    <title>AEAlmancil | Plataforma</title>
 
     <link rel="icon" href="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" sizes="any" type="image/svg+xml">
 
@@ -19,7 +19,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <!-- r+Prof style -->
+    <!-- Plataforma AEAlmancil style -->
     <link rel="stylesheet" href="{% static 'portalAEAlmancil/css/r+prof.css' %}">
 
 
@@ -87,11 +87,11 @@
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
-                <a href="{% url 'portal_aealmancil' %}" class="navbar-brand">
+                <a href="{% url 'landing_page' %}" class="navbar-brand">
                     <img src="{% static 'portalAEAlmancil/img/icon_portalAEAlmancil.ico' %}" alt="p_AEA Logo"
                          class="brand-image img-fluid elevation-3"
                          style="opacity: 3">
-                    <span class="brand-text ">Portal do Agrupamento de Escolas de Almancil</span>
+                    <span class="brand-text ">Plataforma Digital do Agrupamento de Escolas de Almancil</span>
                 </a>
 
                 <!-- Right navbar links -->
@@ -106,14 +106,14 @@
 
         <!-- Texto em cima da imagem -->
         <div class="text-block">
-            <h4>Portal do Agrupamento de Escolas de Almancil</h4>
+            <h4>Plataforma Digital do Agrupamento de Escolas de Almancil</h4>
             <p>O melhor agrupamento do país</p>
         </div>
         <!-- Texto em cima da imagem -->
 
         <!-- Main Footer -->
         {% block footer %}
-            {% include 'footer.html' %}
+            {% include 'core/footer.html' %}
         {% endblock %}
         <!-- Main Footer -->
 
