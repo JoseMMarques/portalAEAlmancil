@@ -149,6 +149,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         """get the user last name"""
         return str(self).split(" ")[-1]
 
+    def get_short_name(self):
+        """Get the user first name"""
+        return str(self).split(" ")[0] + " " + str(self).split(" ")[-1]
+
     def get_type(self):
         """ Retorna o verbose name do tipo do utilizador.
         Útil para o formulário de participação disciplinar """

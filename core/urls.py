@@ -10,4 +10,5 @@ urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('my_homepage/', views.user_homepage, name='user_homepage'),
     path('users/', include('apps.accounts.urls')),
+    path('pias/', include('apps.pias.urls')),
 ]

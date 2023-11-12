@@ -78,7 +78,7 @@ class School(models.Model):
         message=code_message
     )
     code = models.CharField(
-        'Código de Agrupamento',
+        'Código',
         validators=[code_regex],
         max_length=10,
         blank=True,
@@ -169,12 +169,14 @@ class SchoolClass(models.Model):
     )
     teachers = models.ManyToManyField(
         'accounts.Teacher',
+        related_name='teachers',
     )
     students = models.ManyToManyField(
         'accounts.Student',
+        related_name='students',
     )
     name = models.CharField(
-        'Designação da turma',
+        'Turma',
         max_length=20,
     )
     GRADE_OPTIONS = (
@@ -185,7 +187,7 @@ class SchoolClass(models.Model):
         ("9ºANO", "9ºAno"), ("PRE", "Pre-escola"),
     )
     grade = models.CharField(
-        'Ano de Escolaridade',
+        'Nível',
         choices=GRADE_OPTIONS,
         max_length=12,
         default='9ºAno'
@@ -230,8 +232,16 @@ class CargoDT(models.Model):
 
     teacher_dt = models.ForeignKey(
         'accounts.Teacher',
-        verbose_name='Turma',
+        verbose_name='Diretor de Turma',
         on_delete=models.CASCADE,
+        related_name='teacher_dt',
+    )
+    secretary = models.ForeignKey(
+        'accounts.Teacher',
+        verbose_name='Secretário de Turma',
+        on_delete=models.CASCADE,
+        related_name='secretary_dt',
+        blank=True,
     )
     turma = models.OneToOneField(
         'SchoolClass',
@@ -261,7 +271,7 @@ class CargoDT(models.Model):
     class Meta:
         verbose_name = "Cargo de DT"
         verbose_name_plural = "Cargos de DT"
-        ordering = ('teacher',)
+        ordering = ('teacher_dt',)
 
     def __str__(self):
         """Return the str.name fom the object"""
@@ -274,5 +284,5 @@ class CargoDT(models.Model):
         """Set an automátic and unique slug from name and id fields"""
         super(CargoDT, self).save(*args, **kwargs)
         if not self.slug:
-            self.slug = "DT-" + slugify(self.teacher_dt.name) + "-" + str(self.id)
+            self.slug = "DT-" + slugify(self.teacher_dt.get_short_name()) + "-" + str(self.id)
             self.save()

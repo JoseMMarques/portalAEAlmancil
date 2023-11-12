@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     # my_apps
     'apps.accounts',
+    'apps.school_structure',
+    'apps.pias',
 
 ]
 
