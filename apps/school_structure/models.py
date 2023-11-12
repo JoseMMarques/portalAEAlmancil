@@ -1,7 +1,5 @@
 from django.db import models
-from django.urls import reverse
 from django.utils.text import slugify
-from datetime import date
 from django.core.validators import RegexValidator
 
 
@@ -169,13 +167,15 @@ class SchoolClass(models.Model):
         blank=True,
         null=True,
     )
+    teachers = models.ManyToManyField(
+        'accounts.Teacher',
+    )
+    students = models.ManyToManyField(
+        'accounts.Student',
+    )
     name = models.CharField(
         'Designação da turma',
         max_length=20,
-    )
-    teacher_dt = models.OneToOneField(
-        'accounts.Teacher',
-        on_delete=models.CASCADE,
     )
     GRADE_OPTIONS = (
         ("1ºANO", "1ºAno"), ("2ºANO", "2ºAno"),
@@ -227,4 +227,52 @@ class SchoolClass(models.Model):
 
 class CargoDT(models.Model):
     """Um modelo para registar a função de Diretor de Turma """
-    pass
+
+    teacher_dt = models.ForeignKey(
+        'accounts.Teacher',
+        verbose_name='Turma',
+        on_delete=models.CASCADE,
+    )
+    turma = models.OneToOneField(
+        'SchoolClass',
+        verbose_name='Turma',
+        on_delete=models.CASCADE
+    )
+    school_year = models.ForeignKey(
+        'SchoolYear',
+        verbose_name='Ano Letivo',
+        on_delete=models.CASCADE
+    )
+    created = models.DateTimeField(
+        'Criado em',
+        auto_now_add=True
+    )
+    modified = models.DateTimeField(
+        'modificado em',
+        auto_now=True
+    )
+    slug = models.SlugField(
+        max_length=255,
+        unique=True,
+        blank=True,
+        help_text='Deixar em branco para criar um slug automático e único.'
+    )
+
+    class Meta:
+        verbose_name = "Cargo de DT"
+        verbose_name_plural = "Cargos de DT"
+        ordering = ('teacher',)
+
+    def __str__(self):
+        """Return the str.name fom the object"""
+        return self.teacher_dt.name
+
+    def get_absolute_url(self):
+        pass
+
+    def save(self, *args, **kwargs):
+        """Set an automátic and unique slug from name and id fields"""
+        super(CargoDT, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = "DT-" + slugify(self.teacher_dt.name) + "-" + str(self.id)
+            self.save()
