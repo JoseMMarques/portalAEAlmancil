@@ -130,6 +130,14 @@ class School(models.Model):
         'Modificado em',
         auto_now_add=True,
     )
+    diretor = models.CharField(
+        'Diretor(a) do Agrupamento',
+        max_length=254,
+    )
+    coordenador = models.CharField(
+        'Coordenador(a) de estabelecimento',
+        max_length=254,
+    )
 
     class Meta:
         verbose_name = 'Escola'
@@ -164,8 +172,6 @@ class SchoolClass(models.Model):
         'School',
         verbose_name='Escola',
         on_delete=models.CASCADE,
-        blank=True,
-        null=True,
     )
     teachers = models.ManyToManyField(
         'accounts.Teacher',
@@ -178,6 +184,8 @@ class SchoolClass(models.Model):
     name = models.CharField(
         'Turma',
         max_length=20,
+        blank=True,
+        null=True,
     )
     GRADE_OPTIONS = (
         ("1ºANO", "1ºAno"), ("2ºANO", "2ºAno"),
@@ -241,7 +249,6 @@ class CargoDT(models.Model):
         verbose_name='Secretário de Turma',
         on_delete=models.CASCADE,
         related_name='secretary_dt',
-        blank=True,
     )
     turma = models.OneToOneField(
         'SchoolClass',
