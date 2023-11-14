@@ -35,12 +35,12 @@ class UserAdmin(BaseUserAdmin):
     )
 
     list_display = [
-        'type', 'name', 'get_first_name', 'get_last_name', 'get_age', 'birth_date', 'sex', 'phone',
+        'type', 'name', 'process_number', 'email', 'get_age', 'birth_date', 'sex', 'phone',
         'address', 'is_game', 'is_pias'
     ]
 
     list_filter = [
-        'type', 'name', 'birth_date', 'sex', 'phone', 'address', 'is_game',
+        'type', 'birth_date', 'sex', 'is_game',
         'created', 'modified', 'is_game', 'is_pias'
     ]
 
@@ -118,17 +118,17 @@ class StudentAdmin(admin.ModelAdmin):
         )
     )
     list_display = [
-        'name', 'get_first_name', 'get_last_name', 'get_age', 'birth_date', 'sex', 'phone',
+        'process_number', 'name', 'email', 'get_age', 'birth_date', 'sex', 'phone',
         'address', 'is_game', 'is_pias'
     ]
 
     list_filter = [
-        'name', 'birth_date', 'sex', 'phone', 'address', 'is_game',
+        'birth_date', 'sex', 'address', 'is_game',
         'created', 'modified', 'is_game', 'is_pias'
     ]
 
     search_fields = [
-        'name', 'birth_date', 'sex', 'phone', 'address', 'is_game',
+        'process_number', 'name', 'birth_date', 'sex', 'phone', 'address', 'is_game',
         'created', 'modified', 'is_game', 'is_pias'
     ]
 
