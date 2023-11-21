@@ -17,7 +17,7 @@ class SchoolYear(models.Model):
         max_length=12,
         unique=False,
         blank=False,
-        help_text='Insira um ano letivo como o formato "aaaa/aaaa. Exemplo: 2022/2023'
+        help_text='Insira um ano letivo com o formato "aaaa/aaaa. Exemplo: 2022/2023'
     )
     slug = models.SlugField(
         max_length=20,
@@ -94,6 +94,23 @@ class School(models.Model):
         'Morada',
         blank=True,
     )
+    postal_code_message = 'Formato "nnnn-nnn". Exemplo: 8100-128'
+    postal_code_regex = RegexValidator(
+        regex=r'^\d{4}\-\d{3}$',
+        message=postal_code_message,
+    )
+    postal_code = models.CharField(
+        'Código Postal',
+        validators=[postal_code_regex],
+        max_length=12,
+        unique=False,
+        blank=True,
+        help_text='Insira um código postal com o formato "nnnn-nnn. Exemplo: 8100-128'
+    )
+    locality = models.TextField(
+        'Localidade',
+        blank=True,
+    )
     phone1 = models.CharField(
         'Telefone 1',
         max_length=12,
@@ -104,7 +121,7 @@ class School(models.Model):
         max_length=12,
         blank=True,
     )
-    nif_message = 'o NIF deve ter 9 dígitos.'
+    nif_message = ' O NIF deve conter 9 dígitos.'
     nif_regex = RegexValidator(
         regex=r'\d{9}$',
         message=nif_message
@@ -114,8 +131,8 @@ class School(models.Model):
         validators=[nif_regex],
         max_length=10,
         blank=True,
-
-        help_text='Introduza um NIF com 9 dígitos.'
+        help_text='Introduza um NIF com 9 dígitos',
+        unique=True,
     )
     email = models.EmailField(
         'email',
@@ -133,10 +150,12 @@ class School(models.Model):
     diretor = models.CharField(
         'Diretor(a) do Agrupamento',
         max_length=254,
+        blank=True,
     )
     coordenador = models.CharField(
         'Coordenador(a) de estabelecimento',
         max_length=254,
+        blank=True,
     )
 
     class Meta:
@@ -184,8 +203,8 @@ class SchoolClass(models.Model):
     name = models.CharField(
         'Turma',
         max_length=20,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
     GRADE_OPTIONS = (
         ("1ºANO", "1ºAno"), ("2ºANO", "2ºAno"),

@@ -2,6 +2,8 @@ from datetime import date
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.core.validators import RegexValidator
+from django_resized import ResizedImageField
 
 
 class UserManager(BaseUserManager):
@@ -69,7 +71,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     process_number = models.CharField(
         'Número do processo',
         max_length=15,
-        blank=True,
     )
     email = models.EmailField(
         'e-mail',
@@ -81,8 +82,50 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=12,
         blank=True,
     )
+    avatar = ResizedImageField(
+        size=[185, 185],
+        upload_to='users_fotos/',
+        default='users_fotos/no_image.png',
+        crop=['middle', 'center'],
+        quality=75
+    )
     address = models.TextField(
         'Morada',
+        blank=True,
+    )
+    postal_code_message = 'Formato "nnnn-nnn". Exemplo: 8100-128'
+    postal_code_regex = RegexValidator(
+        regex=r'^\d{4}\-\d{3}$',
+        message=postal_code_message,
+    )
+    postal_code = models.CharField(
+        'Código Postal',
+        validators=[postal_code_regex],
+        max_length=12,
+        unique=False,
+        blank=True,
+        help_text='Insira um código postal com o formato "nnnn-nnn. Exemplo: 8100-128'
+    )
+    locality = models.TextField(
+        'Localidade',
+        blank=True,
+    )
+    nif_message = ' O NIF deve conter 9 dígitos.'
+    nif_regex = RegexValidator(
+        regex=r'\d{9}$',
+        message=nif_message
+    )
+    nif = models.CharField(
+        'NIF',
+        validators=[nif_regex],
+        max_length=10,
+        blank=True,
+        help_text='Introduza um NIF com 9 dígitos',
+        unique=True,
+    )
+    nationality = models.CharField(
+        'Nacionalidade',
+        max_length=30,
         blank=True,
     )
     # required fields
@@ -272,35 +315,69 @@ class StudentMore(models.Model):
         on_delete=models.CASCADE,
         primary_key=True
     )
-
-    # atualizar de OnetoOneField para ManyToManyField
-    # school_class = models.ForeignKey(
-    #     'school_structure.SchoolClass',
-    #     verbose_name='Turma',
-    #     on_delete=models.CASCADE,
-    # )
-    # class_number = models.PositiveSmallIntegerField(
-    #     'Número de turma',
-    #     blank=False,
-    # )
-    name_ee = models.CharField(
+    pai_name = models.CharField(
         'Encarregado de Educação',
         max_length=150,
         blank=True,
     )
-    email_ee = models.EmailField(
+    pai_phone = models.CharField(
+        'Telemóvel do EE',
+        max_length=12,
+        blank=True,
+    )
+    pai_profissao = models.CharField(
+        'Profissão do EE',
+        max_length=60,
+        blank=True,
+    )
+    pai_email = models.EmailField(
         'Email do EE',
         max_length=254,
         blank=True,
     )
-    phone_ee_1 = models.CharField(
-        'Telemóvel 1 do EE',
+    mae_name = models.CharField(
+        'Encarregado de Educação',
+        max_length=150,
+        blank=True,
+    )
+    mae_phone = models.CharField(
+        'Telemóvel do EE',
         max_length=12,
         blank=True,
     )
-    phone_ee_2 = models.CharField(
-        'Telemóvel 2 do EE',
+    mae_profissao = models.CharField(
+        'Profissão do EE',
+        max_length=60,
+        blank=True,
+    )
+    mae_email = models.EmailField(
+        'Email do EE',
+        max_length=254,
+        blank=True,
+    )
+    ee_parentesco = models.CharField(
+        'Parentesco',
+        max_length=50,
+        blank=True,
+    )
+    ee_name = models.CharField(
+        'Encarregado de Educação',
+        max_length=150,
+        blank=True,
+    )
+    ee_phone = models.CharField(
+        'Telemóvel do EE',
         max_length=12,
+        blank=True,
+    )
+    ee_profissao = models.CharField(
+        'Profissão do EE',
+        max_length=60,
+        blank=True,
+    )
+    ee_email = models.EmailField(
+        'Email do EE',
+        max_length=254,
         blank=True,
     )
 
