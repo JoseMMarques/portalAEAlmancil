@@ -262,8 +262,8 @@ class TeacherMore(models.Model):
     #     blank=True,
     #     null=True,
     # )
-    subjects = models.CharField(
-        'Disciplinas',
+    hobbies = models.CharField(
+        'Interesses',
         max_length=200,
     )
     # is_dt = models.BooleanField(
@@ -315,47 +315,47 @@ class StudentMore(models.Model):
         on_delete=models.CASCADE,
         primary_key=True
     )
-    pai_name = models.CharField(
-        'Encarregado de Educação',
+    father_name = models.CharField(
+        'Nome do Pai',
         max_length=150,
         blank=True,
     )
-    pai_phone = models.CharField(
-        'Telemóvel do EE',
+    father_phone = models.CharField(
+        'Telemóvel do pai',
         max_length=12,
         blank=True,
     )
-    pai_profissao = models.CharField(
-        'Profissão do EE',
+    father_work = models.CharField(
+        'Profissão do pai',
         max_length=60,
         blank=True,
     )
-    pai_email = models.EmailField(
-        'Email do EE',
+    father_email = models.EmailField(
+        'Email do pai',
         max_length=254,
         blank=True,
     )
-    mae_name = models.CharField(
-        'Encarregado de Educação',
+    mother_name = models.CharField(
+        'Nome da mãe',
         max_length=150,
         blank=True,
     )
-    mae_phone = models.CharField(
-        'Telemóvel do EE',
+    mother_phone = models.CharField(
+        'Telemóvel da mãe',
         max_length=12,
         blank=True,
     )
-    mae_profissao = models.CharField(
-        'Profissão do EE',
+    mother_work = models.CharField(
+        'Profissão da mãe',
         max_length=60,
         blank=True,
     )
-    mae_email = models.EmailField(
-        'Email do EE',
+    mother_email = models.EmailField(
+        'Email da mãe',
         max_length=254,
         blank=True,
     )
-    ee_parentesco = models.CharField(
+    ee_kinship = models.CharField(
         'Parentesco',
         max_length=50,
         blank=True,
@@ -370,7 +370,7 @@ class StudentMore(models.Model):
         max_length=12,
         blank=True,
     )
-    ee_profissao = models.CharField(
+    ee_work = models.CharField(
         'Profissão do EE',
         max_length=60,
         blank=True,

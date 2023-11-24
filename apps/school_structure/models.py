@@ -195,6 +195,7 @@ class SchoolClass(models.Model):
     teachers = models.ManyToManyField(
         'accounts.Teacher',
         related_name='teachers',
+        through='TeacherSchoolClass',
     )
     students = models.ManyToManyField(
         'accounts.Student',
@@ -254,30 +255,103 @@ class SchoolClass(models.Model):
             self.save()
 
 
-class CargoDT(models.Model):
-    """Um modelo para registar a função de Diretor de Turma """
+class TeacherSchoolClass(models.Model):
+    """Join Table para professores por turma"""
 
-    teacher_dt = models.ForeignKey(
-        'accounts.Teacher',
-        verbose_name='Diretor de Turma',
-        on_delete=models.CASCADE,
-        related_name='teacher_dt',
+    teacher = models.ForeignKey(
+        'Teacher',
+        verbose_name='Professor',
+        related_name='Professores-turma',
+        on_delete=models.CASCADE
     )
-    secretary = models.ForeignKey(
-        'accounts.Teacher',
-        verbose_name='Secretário de Turma',
-        on_delete=models.CASCADE,
-        related_name='secretary_dt',
-    )
-    turma = models.OneToOneField(
+    school_class = models.ForeignKey(
         'SchoolClass',
         verbose_name='Turma',
+        related_name='Professores-turma',
         on_delete=models.CASCADE
     )
     school_year = models.ForeignKey(
         'SchoolYear',
         verbose_name='Ano Letivo',
         on_delete=models.CASCADE
+    )
+    subject = models.ForeignKey(
+        'Subject',
+        verbose_name='Disciplina',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = "Professor-Turma"
+        verbose_name_plural = "Professores-turmas"
+        ordering = ('school_class',)
+
+    def __str__(self):
+        """Return the str.name fom the object"""
+        return self.teacher.name + '-' + self.school_class.name
+
+    def get_absolute_url(self):
+        pass
+
+
+class StudentSchoolClass(models.Model):
+    """Join Table para professores por turma"""
+
+    student = models.ForeignKey(
+        'Student',
+        verbose_name='Aluno',
+        related_name='Alunos-turma',
+        on_delete=models.CASCADE
+    )
+    school_class = models.ForeignKey(
+        'SchoolClass',
+        verbose_name='Turma',
+        related_name='Alunos-turma',
+        on_delete=models.CASCADE
+    )
+    school_year = models.ForeignKey(
+        'SchoolYear',
+        verbose_name='Ano Letivo',
+        on_delete=models.CASCADE
+    )
+    class_number = models.IntegerField(
+        'Número de turma',
+        blank=False,
+    )
+
+    class Meta:
+        verbose_name = "Aluno-Turma"
+        verbose_name_plural = "Alunos-turmas"
+        ordering = ('school_class',)
+
+    def __str__(self):
+        """Return the str.name fom the object"""
+        return self.student.name + '-' + self.school_class.name
+
+    def get_absolute_url(self):
+        pass
+
+
+class Subject(models.Model):
+    """Um modelo para as discilplinas"""
+
+    name = models.CharField(
+        'Nome',
+        max_length=100,
+        blank=False,
+        null=False,
+    )
+    short_name = models.CharField(
+        'Nome abreviado',
+        max_length=20,
+        blank=False,
+        null=False,
+    )
+    slug = models.SlugField(
+        max_length=255,
+        unique=True,
+        blank=True,
+        help_text='Deixar em branco para criar um slug automático e único.'
     )
     created = models.DateTimeField(
         'Criado em',
@@ -287,11 +361,65 @@ class CargoDT(models.Model):
         'modificado em',
         auto_now=True
     )
+
+    class Meta:
+        verbose_name = "Disciplina"
+        verbose_name_plural = "Disciplinas"
+        ordering = ('name',)
+
+    def __str__(self):
+        """Return the str.name fom the object"""
+        return self.name
+
+    def get_absolute_url(self):
+        pass
+
+    def save(self, *args, **kwargs):
+        """Set an automátic and unique slug from name and id fields"""
+        super(Subject, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(self.short_name) + "-" + str(self.id)
+            self.save()
+
+
+class CargoDT(models.Model):
+    """Um modelo para registar as funções de Direção de Turma """
+
+    teacher_dt = models.ForeignKey(
+        'accounts.Teacher',
+        verbose_name='Diretor de Turma',
+        on_delete=models.CASCADE,
+        related_name='CargosDT',
+    )
+    secretary = models.ForeignKey(
+        'accounts.Teacher',
+        verbose_name='Secretário',
+        on_delete=models.CASCADE,
+        related_name='CargosDT',
+    )
+    school_class = models.OneToOneField(
+        'SchoolClass',
+        verbose_name='Turma',
+        on_delete=models.CASCADE
+    )
+    school_year = models.ForeignKey(
+        'SchoolYear',
+        verbose_name='Ano Letivo',
+        on_delete=models.CASCADE
+    )
     slug = models.SlugField(
         max_length=255,
         unique=True,
         blank=True,
         help_text='Deixar em branco para criar um slug automático e único.'
+    )
+    created = models.DateTimeField(
+        'Criado em',
+        auto_now_add=True
+    )
+    modified = models.DateTimeField(
+        'modificado em',
+        auto_now=True
     )
 
     class Meta:
