@@ -132,7 +132,7 @@ class School(models.Model):
         max_length=10,
         blank=True,
         help_text='Introduza um NIF com 9 dígitos',
-        unique=True,
+        default="600080781"
     )
     email = models.EmailField(
         'email',
@@ -200,6 +200,7 @@ class SchoolClass(models.Model):
     students = models.ManyToManyField(
         'accounts.Student',
         related_name='students',
+        through='StudentSchoolClass',
     )
     name = models.CharField(
         'Turma',
@@ -259,15 +260,15 @@ class TeacherSchoolClass(models.Model):
     """Join Table para professores por turma"""
 
     teacher = models.ForeignKey(
-        'Teacher',
+        'accounts.Teacher',
         verbose_name='Professor',
-        related_name='Professores-turma',
+        related_name='Professores_turma',
         on_delete=models.CASCADE
     )
     school_class = models.ForeignKey(
-        'SchoolClass',
+        'school_structure.SchoolClass',
         verbose_name='Turma',
-        related_name='Professores-turma',
+        related_name='Professores_turma',
         on_delete=models.CASCADE
     )
     school_year = models.ForeignKey(
@@ -282,13 +283,19 @@ class TeacherSchoolClass(models.Model):
     )
 
     class Meta:
-        verbose_name = "Professor-Turma"
-        verbose_name_plural = "Professores-turmas"
+        verbose_name = "Professor da Turma"
+        verbose_name_plural = "Professores da turma"
         ordering = ('school_class',)
 
     def __str__(self):
         """Return the str.name fom the object"""
         return self.teacher.name + '-' + self.school_class.name
+
+    def get_subject(self):
+        return self.subject.name
+
+    def get_subject_short_name(self):
+        return self.subject.short_name
 
     def get_absolute_url(self):
         pass
@@ -298,15 +305,15 @@ class StudentSchoolClass(models.Model):
     """Join Table para professores por turma"""
 
     student = models.ForeignKey(
-        'Student',
+        'accounts.Student',
         verbose_name='Aluno',
-        related_name='Alunos-turma',
+        related_name='Alunos_turma',
         on_delete=models.CASCADE
     )
     school_class = models.ForeignKey(
-        'SchoolClass',
+        'school_structure.SchoolClass',
         verbose_name='Turma',
-        related_name='Alunos-turma',
+        related_name='Alunos_turma',
         on_delete=models.CASCADE
     )
     school_year = models.ForeignKey(
@@ -320,8 +327,8 @@ class StudentSchoolClass(models.Model):
     )
 
     class Meta:
-        verbose_name = "Aluno-Turma"
-        verbose_name_plural = "Alunos-turmas"
+        verbose_name = "Aluno da Turma"
+        verbose_name_plural = "Alunos da turma"
         ordering = ('school_class',)
 
     def __str__(self):
@@ -335,6 +342,11 @@ class StudentSchoolClass(models.Model):
 class Subject(models.Model):
     """Um modelo para as discilplinas"""
 
+    school_year = models.ForeignKey(
+        'SchoolYear',
+        verbose_name='Ano Letivo',
+        on_delete=models.CASCADE
+    )
     name = models.CharField(
         'Nome',
         max_length=100,
@@ -395,7 +407,7 @@ class CargoDT(models.Model):
         'accounts.Teacher',
         verbose_name='Secretário',
         on_delete=models.CASCADE,
-        related_name='CargosDT',
+        related_name='Secretary',
     )
     school_class = models.OneToOneField(
         'SchoolClass',

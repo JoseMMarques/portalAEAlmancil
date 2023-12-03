@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from apps.school_structure.models import SchoolYear, School, SchoolClass
+from apps.school_structure.models import SchoolYear, School, SchoolClass, StudentSchoolClass
 from apps.accounts.models import User, Teacher, Student
 
 
@@ -34,11 +34,11 @@ class Command(BaseCommand):
         """
 
         if SchoolClass.objects.filter(name=fields[4], school_year__name=fields[0]).exists():
-            # Verifica se a escola já existe na base de dados
+            # Verifica se a turma já existe na base de dados
             self.stdout.write(
                 self.style.WARNING('Turma "%s" de "%s" já existe!' % (fields[4], fields[0])))
         else:
-            # Cria Escola na base de dados
+            # Cria turma na base de dados
             try:
                 school_year = SchoolYear.objects.get(name=fields[0])
                 school = School.objects.get(name=fields[1])
@@ -50,13 +50,23 @@ class Command(BaseCommand):
                     grade=fields[5],
                 )
                 school_class = SchoolClass.objects.get(name=fields[4], school_year__name=fields[0])
-                students = fields[3].split()
+                students = fields[3].split(';')
 
-                for student in students:
-                    try:
-                        school_class.students.add(Student.objects.get(process_number=student))
-                    except Exception as e:
-                        self.stdout.write(self.style.ERROR('%s (%s) -> Student process number: %s' % (e, type(e), student)))
+                if students != ['']:
+                    for n, student in enumerate(students):
+                        try:
+                            stu = Student.objects.get(process_number=student)
+                        except Exception as e:
+                            self.stdout.write(self.style.ERROR(
+                                '%s (%s) -> Número de processo: %s | Turma: %s' % (e, type(e), student, school_class))
+                            )
+                        else:
+                            StudentSchoolClass.objects.create(
+                                student=stu,
+                                school_class=school_class,
+                                school_year=school_year,
+                                class_number=n,
+                            )
 
                 self.stdout.write(
                     self.style.SUCCESS('Turma "%s" do ano letivo "%s" criada com sucesso!' % (fields[4], fields[0])))

@@ -121,7 +121,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=10,
         blank=True,
         help_text='Introduza um NIF com 9 dígitos',
-        unique=True,
+        # unique=True, ainda não tenho os NIF dos alunos na Base de Dados
+        # TODO: ter nifs dos alunos na base de dados e desconebtar este campo
     )
     nationality = models.CharField(
         'Nacionalidade',

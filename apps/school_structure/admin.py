@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import SchoolYear, School, SchoolClass, CargoDT
+from .models import SchoolYear, School, SchoolClass, StudentSchoolClass, TeacherSchoolClass, CargoDT, Subject
 
 
 class SchoolYearAdmin(admin.ModelAdmin):
@@ -37,17 +37,31 @@ class SchoolAdmin(admin.ModelAdmin):
 admin.site.register(School, SchoolAdmin)
 
 
+class StudentSchoolClassInline(admin.TabularInline):
+    model = StudentSchoolClass
+    extra = 0
+
+
+class TeacherSchoolClassInline(admin.TabularInline):
+    model = TeacherSchoolClass
+    extra = 0
+
+
 class SchoolClassAdmin(admin.ModelAdmin):
     """Definições da Turma no Admin"""
 
     list_display = [
-        'name', 'get_school_year', 'get_school', 'get_teachers', 'get_students', 'grade', 'slug', 'created', 'modified'
+        'name', 'get_school_year', 'get_school', 'get_teachers_subjects', 'get_students', 'grade', 'slug', 'created', 'modified'
     ]
     search_fields = [
-        'name', 'get_school_year', 'get_school', 'get_teachers', 'get_students', 'grade', 'slug', 'created', 'modified'
+        'name', 'get_school_year', 'get_school', 'get_teachers_subjects', 'get_students', 'grade', 'slug', 'created', 'modified'
     ]
     list_filter = [
         'name', 'school_year__name', 'school__name', 'teachers', 'students', 'grade', 'slug', 'created', 'modified'
+    ]
+    inlines = [
+        StudentSchoolClassInline,
+        TeacherSchoolClassInline,
     ]
 
     def get_school_year(self, obj):
@@ -66,13 +80,34 @@ class SchoolClassAdmin(admin.ModelAdmin):
     # Renames column
     get_school.short_description = 'Escola'
 
-    def get_teachers(self, obj):
-        return [teacher.get_short_name() for teacher in obj.teachers.all()]
+    # def get_teachers(self, obj):
+    #     return [teacher.get_short_name() for teacher in obj.teachers.all()]
+    #
+    # # Allows column order sorting
+    # get_teachers.admin_order_field = 'teacher'
+    # # Renames column
+    # get_teachers.short_description = 'Professores'
+
+    def get_teachers_subjects(self, obj):
+        teachers = obj.teachers.all()
+
+        # teacher_subjects_list = ",".join(str(item) for )
+        teacher_subjects_list = []
+        for teacher in teachers:
+            if teacher.get_short_name() not in teacher_subjects_list:
+                teacher_subjects_list.append(teacher.get_short_name())
+                query = TeacherSchoolClass.objects.filter(teacher=teacher).all()
+                query_list = []
+                for q in query:
+                    query_list.append(q.get_subject_short_name())
+
+                teacher_subjects_list.append(query_list)
+        return teacher_subjects_list
 
     # Allows column order sorting
-    get_teachers.admin_order_field = 'teacher'
+    get_teachers_subjects.admin_order_field = 'teacher'
     # Renames column
-    get_teachers.short_description = 'Professores da turma'
+    get_teachers_subjects.short_description = 'Professores'
 
     def get_students(self, obj):
         return [student.get_short_name() for student in obj.students.all()]
@@ -80,7 +115,7 @@ class SchoolClassAdmin(admin.ModelAdmin):
     # Allows column order sorting
     get_students.admin_order_field = 'student'
     # Renames column
-    get_students.short_description = 'Alunos da turma'
+    get_students.short_description = 'Alunos'
 
 
 admin.site.register(SchoolClass, SchoolClassAdmin)
@@ -96,7 +131,7 @@ class CargoDTAdmin(admin.ModelAdmin):
         'get_teacher_dt', 'get_school_year', 'get_turma', 'slug', 'created', 'modified'
     ]
     list_filter = [
-        'teacher_dt__name', 'school_year__name', 'turma__name', 'slug', 'created', 'modified'
+        'teacher_dt__name', 'school_year__name', 'school_class__name', 'slug', 'created', 'modified'
     ]
 
     def get_teacher_dt(self, obj):
@@ -125,3 +160,20 @@ class CargoDTAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CargoDT, CargoDTAdmin)
+
+
+class SubjectAdmin(admin.ModelAdmin):
+    """Definições das disciplinas no Admin"""
+
+    list_display = [
+        'name', 'short_name', 'slug', 'created', 'modified'
+    ]
+    search_fields = [
+        'name', 'short_name', 'slug', 'created', 'modified'
+    ]
+    list_filter = [
+        'name', 'short_name', 'slug', 'created', 'modified'
+    ]
+
+
+admin.site.register(Subject, SubjectAdmin)

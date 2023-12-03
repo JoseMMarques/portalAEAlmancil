@@ -28,7 +28,7 @@ class Command(BaseCommand):
 
     def save_object_in_db(self, fields):
         """
-        modelo ano_letivo
+        modelo escola
         fields = [ name, code, address, phone1, phone2, NIF, email, diretor, coordenador ]
         """
 

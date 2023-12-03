@@ -33,11 +33,11 @@ class Command(BaseCommand):
         """
 
         if Student.objects.filter(process_number=fields[0]).exists():
-            # Verifica se a escola já existe na base de dados
+            # Verifica se o aluno já existe na base de dados
             self.stdout.write(
                 self.style.WARNING('O aluno(a) "%s" já está registado na BD!' % (fields[1])))
         else:
-            # Cria Escola na base de dados
+            # Cria aluno na base de dados
             try:
                 User.objects.create(
                     process_number=fields[0],

@@ -32,7 +32,7 @@ class Command(BaseCommand):
         fields = [ name, start_date, end_date ]
         """
         if SchoolYear.objects.filter(name=fields[0]).exists():
-            # Verifica se a escola já existe na base de dados
+            # Verifica se o ano letivo já existe na base de dados
             self.stdout.write(
                 self.style.WARNING('Ano Letivo "%s" Já existe!' % (fields[0])))
         else:
