@@ -125,22 +125,30 @@ class CargoDTAdmin(admin.ModelAdmin):
     """Definições do CargoDT no Admin"""
 
     list_display = [
-        'get_teacher_dt', 'get_school_year', 'get_turma', 'slug', 'created', 'modified'
+        'get_turma', 'get_teacher_dt', 'get_secretary',  'get_school_year', 'slug', 'modified'
     ]
     search_fields = [
-        'get_teacher_dt', 'get_school_year', 'get_turma', 'slug', 'created', 'modified'
+        'get_turma', 'get_teacher_dt', 'get_secretary',  'get_school_year', 'slug', 'modified'
     ]
     list_filter = [
-        'teacher_dt__name', 'school_year__name', 'school_class__name', 'slug', 'created', 'modified'
+        'teacher_dt__name', 'secretary__name', 'school_year__name', 'school_class__name',
     ]
 
     def get_teacher_dt(self, obj):
         return obj.teacher_dt.get_short_name()
 
     # Allows column order sorting
-    get_teacher_dt.admin_order_field = 'teacher'
+    get_teacher_dt.admin_order_field = 'teacher_dt'
     # Renames column
     get_teacher_dt.short_description = 'Diretor de Turma'
+
+    def get_secretary(self, obj):
+        return obj.secretary.get_short_name()
+
+    # Allows column order sorting
+    get_secretary.admin_order_field = 'secretary'
+    # Renames column
+    get_secretary.short_description = 'Secretário'
 
     def get_school_year(self, obj):
         return obj.school_year.name
@@ -151,10 +159,10 @@ class CargoDTAdmin(admin.ModelAdmin):
     get_school_year.short_description = 'Ano Letivo'
 
     def get_turma(self, obj):
-        return obj.turma.name
+        return obj.school_class.name
 
     # Allows column order sorting
-    get_turma.admin_order_field = 'turma'
+    get_turma.admin_order_field = 'school_class'
     # Renames column
     get_turma.short_description = 'Turma'
 
