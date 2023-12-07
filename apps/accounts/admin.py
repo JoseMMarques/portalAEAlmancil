@@ -95,7 +95,7 @@ class TeacherAdmin(admin.ModelAdmin):
     ]
 
 
-class StudentMoreInline(admin.TabularInline):
+class StudentMoreInline(admin.StackedInline):
     model = StudentMore
 
 
