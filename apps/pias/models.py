@@ -1,6 +1,22 @@
 from django.db import models
+from django.utils.text import slugify
 
-# Create your models here.
+
+def path_and_rename(instance, filename):
+    """ Funtion to rename de uploaded file in the PIAS model"""
+
+    upload_to = 'media/PIAS'
+    extension = filename.split('.')[-1]
+    student_process_number = instance.student.process_number
+    doc_date = instance.doc_date
+    doc_date_formated = doc_date.repalce('-', '')
+    doc_type = instance.type
+    doc_type_formated = doc_type.replace(' ', '')
+
+    new_filename = upload_to + "/" + student_process_number + \
+        doc_date_formated + doc_type_formated + instance.pk + extension
+
+    return new_filename
 
 
 class PiasType(models.Model):
@@ -16,6 +32,12 @@ class PiasType(models.Model):
         'Descrição',
         blank=True,
     )
+    slug = models.SlugField(
+        max_length=255,
+        unique=True,
+        blank=True,
+        help_text='Deixar em branco para criar um slug automático e único'
+    )
     created = models.DateTimeField(
         'Criado em',
         auto_now_add=True,
@@ -25,8 +47,23 @@ class PiasType(models.Model):
         auto_now_add=True,
     )
 
+    def __str__(self):
+        """returns the name of the object"""
+        return self.name
 
-class PIAS (models.Model):
+    def get_absolute_url(self):
+        pass
+
+    def save(self, *args, **kwargs):
+        """ Set an automatic and unique slug for the name of the class"""
+
+        super(PiasType, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(self.name)
+            self.save()
+
+
+class PIAS(models.Model):
     """ Um modelo para os pias dos alunos"""
 
     school_year = models.ForeignKey(
@@ -65,14 +102,8 @@ class PIAS (models.Model):
         blank=True,
         help_text='Deixar em branco para criar um slug automático e único'
     )
-    file_name = models.CharField(
-        'Nome do ficheiro',
-        max_length=400,
-        blank=False,
-        null=False,
-    )
     uploaded_to = models.FileField(
-        upload_to='media/PIAS'
+        upload_to=path_and_rename
     )
     related_docs = models.ManyToManyField(
         "self",
@@ -88,6 +119,21 @@ class PIAS (models.Model):
         auto_now_add=True,
     )
 
+    def __str__(self):
+        """returns the name of the object"""
+        return self.name
+
+    def get_absolute_url(self):
+        pass
+
+    def save(self, *args, **kwargs):
+        """ Set an automatic and unique slug for the name of the class"""
+
+        super(PIAS, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(self.name) + '_' + str(self.id)
+            self.save()
+
 # Upload files
 # https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
 
@@ -95,3 +141,6 @@ class PIAS (models.Model):
 # https://docs.djangoproject.com/en/4.2/ref/models/fields/#django.db.models.ManyToManyField.symmetrical
 # https://afeez1131.hashnode.dev/introduction-to-symmetrical-and-asymmetrical-relationships-in-djangos-manytomanyfield
 
+# rename a file and upload
+# https://stackoverflow.com/questions/64633436/how-do-i-rename-image-that-i-uploaded-through-django-rest-framework
+# https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
