@@ -3,22 +3,171 @@
 {% load widget_tweaks %}
 {% block content %}
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container">
-                <h3> Pias HelloWorld</h3>
-            </div><!-- /.container-fluid -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Processos Individuais dos Alunos</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'user_homepage' %}">Homepage</a></li>
+              <li class="breadcrumb-item active">PIA's</li>
+            </ol>
+          </div>
         </div>
-        <!-- /.content-header -->
+      </div><!-- /.container-fluid -->
+    </section>
 
-        <!-- Main content -->
-        <div class="content">
 
-            <h3> Pias HomePage</h3>
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <h2 class="text-center display-4">Consulta de Processo</h2>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
 
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form method="post">
+                {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label>Nome do aluno:</label>
+                                        {% render_field form.student class="form-control" placeholder=field.label %}
+                                        <button type="submit" class="btn btn-primary btn-block">Consultar</button>
+                                    </div>
+                                </div>
+                               <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block">Consultar</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% for error in field.errors %}
+                    <ul>
+                        <li class="text-danger" style="list-style-type:square;">
+                            {{ error }}
+                        </li>
+                    </ul>
+                {% endfor %}
+
+                <div class="centrado">
+
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+            </form>
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Nome do aluno:</label>
+                                    <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+                                        <option>Text only</option>
+                                        <option>Images</option>
+                                        <option>Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Nome do Aluno:</label>
+                                    <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+                                        <option>Text only</option>
+                                        <option>Images</option>
+                                        <option>Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Tipo de Documento:</label>
+                                    <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+                                        <option>Text only</option>
+                                        <option>Images</option>
+                                        <option>Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row mt-3">
+                <div class="col-md-10 offset-md-1">
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col px-4">
+                                    <div>
+                                        <div class="float-right">2021-04-20 04:04pm</div>
+                                        <h3>Lorem ipsum dolor sit amet</h3>
+                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo" style="max-height: 160px;">
+                                </div>
+                                <div class="col px-4">
+                                    <div>
+                                        <div class="float-right">2021-04-20 10:14pm</div>
+                                        <h3>Lorem ipsum dolor sit amet</h3>
+                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <iframe width="240" height="160" src="https://www.youtube.com/embed/WEkSYw3o5is?controls=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" class="border-0" allowfullscreen></iframe>
+                                </div>
+                                <div class="col px-4">
+                                    <div>
+                                        <div class="float-right">2021-04-20 11:54pm</div>
+                                        <h3>Lorem ipsum dolor sit amet</h3>
+                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- /.content-wrapper -->
+    </section>
+
+  </div>
+</div>
+  <!-- /.content-wrapper -->
 {% endblock %}
