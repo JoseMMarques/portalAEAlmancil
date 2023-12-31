@@ -22,8 +22,6 @@ def path_and_rename(instance, filename):
     new_filename = upload_to + "/" + student_process_number + "_" + \
         doc_date_formated + "_" + doc_type_formated + "_" + date_string + "." + extension
 
-    print(instance.id)
-
     return new_filename
 
 
