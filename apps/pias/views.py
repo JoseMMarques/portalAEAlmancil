@@ -21,9 +21,9 @@ def pias_consult_form_view(request):
     if request.method == 'POST':
         if form.is_valid():
             messages.success(request, f" consulta realizada com sucesso ")
-            return redirect('core:user_homepage')
+            return redirect('user_homepage')
 
-    template_name = 'pias/pias_homepage.html'
+    template_name = 'pias/pias_consult.html'
 
     context = {'form': form}
     return render(request, template_name, context)

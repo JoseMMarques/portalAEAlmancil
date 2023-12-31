@@ -1,20 +1,28 @@
 from django.db import models
 from django.utils.text import slugify
+import datetime
 
 
 def path_and_rename(instance, filename):
     """ Funtion to rename de uploaded file in the PIAS model"""
 
+    # converte a data e tempo atual em string
+    # vai servir como 'id', para tornar o nome do ficheiro único
+    now = datetime.datetime.now()
+    date_string = now.strftime("%Y%m%d%H%M%S")
+
     upload_to = 'media/PIAS'
     extension = filename.split('.')[-1]
     student_process_number = instance.student.process_number
-    doc_date = instance.doc_date
-    doc_date_formated = doc_date.repalce('-', '')
+    doc_date = str(instance.doc_date)
+    doc_date_formated = doc_date.replace('-', '')
     doc_type = instance.type
-    doc_type_formated = doc_type.replace(' ', '')
+    doc_type_formated = str(doc_type).replace(' ', '')
 
-    new_filename = upload_to + "/" + student_process_number + \
-        doc_date_formated + doc_type_formated + instance.pk + extension
+    new_filename = upload_to + "/" + student_process_number + "_" + \
+        doc_date_formated + "_" + doc_type_formated + "_" + date_string + "." + extension
+
+    print(instance.id)
 
     return new_filename
 
@@ -28,7 +36,7 @@ class PiasType(models.Model):
         blank=False,
         null=False,
     )
-    desciption = models.TextField(
+    description = models.TextField(
         'Descrição',
         blank=True,
     )
@@ -46,6 +54,11 @@ class PiasType(models.Model):
         'Modificado em',
         auto_now_add=True,
     )
+
+    class Meta:
+        verbose_name = 'Tipo de Documento'
+        verbose_name_plural = 'Tipos de Documentos'
+        ordering = ['name']
 
     def __str__(self):
         """returns the name of the object"""
@@ -92,7 +105,7 @@ class PIAS(models.Model):
         blank=True,
         null=True,
     )
-    desciption = models.TextField(
+    description = models.TextField(
         'Descrição',
         blank=True,
     )
@@ -118,6 +131,11 @@ class PIAS(models.Model):
         'Modificado em',
         auto_now_add=True,
     )
+
+    class Meta:
+        verbose_name = 'PIA'
+        verbose_name_plural = 'PIA\'s'
+        ordering = ['name']
 
     def __str__(self):
         """returns the name of the object"""

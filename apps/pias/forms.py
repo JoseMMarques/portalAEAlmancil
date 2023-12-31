@@ -3,11 +3,9 @@ from .models import PIAS
 
 
 class PiasConsultForm(ModelForm):
-
-    #process_number = forms.IntegerField()
-
+    """Formulario para consulta dos PIAS"""
     class Meta:
         model = PIAS
         fields = [
-            'student', 'school_year', 'name'
+            'student',
         ]
