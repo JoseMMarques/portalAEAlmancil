@@ -29,9 +29,10 @@ def pias_consult_view(request):
                 student=student,
             ).order_by('-doc_date')
 
-            messages.success(request, f" consulta realizada com sucesso ")
-
-            context = {"pias": student_pias}
+            context = {
+                "pias": student_pias,
+                "student": student,
+            }
             template_name = 'pias/pias_result.html'
 
             return render(request, template_name, context)
