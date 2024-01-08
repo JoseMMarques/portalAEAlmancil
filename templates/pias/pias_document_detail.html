@@ -4,85 +4,89 @@
 {% block content %}
 
     <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Processos Individuais dos Alunos</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{% url 'user_homepage' %}">Início</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'pias:pias_consult_view' %}">PIA-Consulta</a></li>
-              <li class="breadcrumb-item active">PIA-Documentos</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Processos Individuais dos Alunos</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'user_homepage' %}">Início</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'pias:pias_view' %}">PIA-Consulta</a>
+                            </li>
+                            <li class="breadcrumb-item active">PIA-Documentos</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
 
 
-    <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <h2 class="text-center display-4">Documentos do Processo</h2>
-      </div>
-      <!-- /.container-fluid -->
-    </section>
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <h2 class="text-center display-4">Documentos do Processo</h2>
+                </div>
+                <!-- /.container-fluid -->
+                <div>
+                    <a href='{% url "pias_document_view" doc_slug=obj.id %}' target="_blank">Show PDF on new tab</a>
+                </div>
+            </section>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row mt-3">
-                <div class="col-md-10 offset-md-1">
-                    <div class="list-group">
-                        <div class="list-group-item">
-                            <div class="row">
-                                <p> falta div com a identificação do aluno</p>
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row mt-3">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <p> falta div com a identificação do aluno</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="list-group">
+                                {% if not pias %}
+                                    <div class="container-fluid">
+                                        <h5 class="text-center display-8">Processo sem documentos</h5>
+                                    </div>
+                                {% else %}
+                                    {% for pia in pias %}
+                                        <div class="list-group-item">
+                                            <div class="row">
+                                                <div class="col px-4">
+                                                    <div>
+                                                        <div class="float-right">
+                                                            {{ pia.doc_date }}
+                                                        </div>
+                                                        <h3>
+                                                            <a href="{% url 'pias:pias_consult_view' %}">
+                                                                {{ pia.type }}
+                                                            </a>
+                                                        </h3>
+                                                        <p class="mb-0">
+                                                            {{ pia.description }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-10 offset-md-1">
-                    <div class="list-group">
-                        {% if not pias %}
-                            <div class="container-fluid">
-                                <h5 class="text-center display-8">Processo sem documentos</h5>
-                            </div>
-                        {% else %}
-                            {% for pia in pias %}
-                                <div class="list-group-item">
-                                    <div class="row">
-                                        <div class="col px-4">
-                                            <div>
-                                                <div class="float-right">
-                                                    {{ pia.doc_date }}
-                                                </div>
-                                                <h3>
-                                                    <a href="{% url 'pias:pias_consult_view' %}">
-                                                        {{ pia.type }}
-                                                    </a>
-                                                </h3>
-                                                <p class="mb-0">
-                                                    {{ pia.description }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-  </div>
-</div>
-  <!-- /.content-wrapper -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
 {% endblock %}

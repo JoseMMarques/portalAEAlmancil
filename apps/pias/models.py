@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 import datetime
 
@@ -140,7 +141,13 @@ class PIAS(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        pass
+        return reverse(
+            'pias:pias_document_view',
+            kwargs={
+                'student_id': self.student_id,
+                'doc_slug': self.slug
+            }
+        )
 
     def save(self, *args, **kwargs):
         """ Set an automatic and unique slug for the name of the class"""

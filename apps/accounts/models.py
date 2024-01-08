@@ -300,6 +300,10 @@ class Student(User):
         verbose_name_plural = "Alunos"
         ordering = ('name',)
 
+    @property
+    def more(self):
+        return self.studentmore
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.type = User.Types.STUDENT
@@ -406,6 +410,10 @@ class Employee(User):
         verbose_name = "Funcionário"
         verbose_name_plural = "Funcionários"
         ordering = ('name',)
+
+    @property
+    def more(self):
+        return self.employeemore
 
     def save(self, *args, **kwargs):
         if not self.pk:
