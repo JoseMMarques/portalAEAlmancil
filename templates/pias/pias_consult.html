@@ -26,99 +26,88 @@
 
         <div class="content-wrapper">
 
-<!-- Content Header (Page header) -->
+            <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
                     <h2 class="text-center display-4">Processo Individual do Aluno</h2>
                 </div>
                 <!-- /.container-fluid -->
             </section>
-        <!-- Main content -->
+            <!-- Main content -->
 
 
-              <!-- Main content -->
-    <section class="content">
+            <!-- Main content -->
+            <section class="content">
 
-      <!-- Default box -->
+                <!-- Default box -->
 
 
-          <div class="row">
-            <div class="col-md-5 offset-md-1">
-              <div class="card  d-flex flex-fill">
-                <div class="card-header text-muted border-bottom-0">
+                <div class="row">
+                    <div class="col-md-5 offset-md-1">
+                        <div class="card  d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
 
-                    <ul class="ml-0 mb-0 fa-ul text-muted">
-                        <li class="small"><h6><b>Processo: </b> {{ student.process_number }}</h6> </li>
-                      </ul>
-                </div>
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-7">
-                      <h3>
-                          <a href="{% url 'pias:pias_view' %}">
-                              {{ student.name }}
-                          </a>
-                      </h3>
-                      <ul class="ml-0 mb-0 fa-ul text-muted">
-                        <li class="small"><b>Email: </b> {{ student.email }}</li>
-                        <li class="small"> <b>Telemóvel: </b> {{ student.phone }}</li>
-                        <li class="small"> <b>Data de nascimento: </b> {{ student.birth_date }}</li>
-                        <li class="small"> <b>Idade: </b> {{ student.get_age }} anos</li>
-                        <li class="small"> <b>Morada: </b> {{ student.address }}</li>
-                        <li class="small"> {{ student.postal_code }} - {{ student.locality }}</li>
-                      </ul>
+                                <ul class="ml-0 mb-0 fa-ul text-muted">
+                                    <li class="small"><h6><b>Processo: </b> {{ student.process_number }}</h6></li>
+                                </ul>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h3>
+                                            <a href="{% url 'pias:pias_view' %}">
+                                                {{ student.name }}
+                                            </a>
+                                        </h3>
+                                        <ul class="ml-0 mb-0 fa-ul text-muted">
+                                            <li class="small"><b>Email: </b> {{ student.email }}</li>
+                                            <li class="small"><b>Telemóvel: </b> {{ student.phone }}</li>
+                                            <li class="small"><b>Data de nascimento: </b> {{ student.birth_date }}</li>
+                                            <li class="small"><b>Idade: </b> {{ student.get_age }} anos</li>
+                                            <li class="small"><b>Morada: </b> {{ student.address }}</li>
+                                            <li class="small"> {{ student.postal_code }} - {{ student.locality }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar"
+                                             class="img-circle img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="col-5 text-center">
-                      <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar" class="img-circle img-fluid">
+
+                    <div class="col-12 col-sm-6 col-md-5 d-flex align-items-stretch flex-column">
+                        <div class="card  d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                <ul class="ml-0 mb-0 fa-ul text-muted">
+                                    <li class="small"><h6><b>Encarregado(a) de Educação: </b></h6></li>
+                                </ul>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>{{ student.more.ee_name }}</b></h2>
+                                        <ul class="ml-0 mb-0 fa-ul text-muted">
+                                            <li class="small"><b>Parentesco: </b> {{ student.more.ee_kinship }} </li>
+                                            <li class="small"><b>Email: </b> {{ student.more.ee_email }}</li>
+                                            <li class="small"><b>Telemóvel: </b> {{ student.more.ee_phone }}</li>
+                                            <li class="small"><b>Profissão: </b> {{ student.more.ee_work }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar"
+                                             class="img-circle img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                  </div>
                 </div>
-
-              </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-5 d-flex align-items-stretch flex-column">
-              <div class="card  d-flex flex-fill">
-                <div class="card-header text-muted border-bottom-0">
-                    <ul class="ml-0 mb-0 fa-ul text-muted">
-                        <li class="small"><h6><b>Encarregado(a) de Educação: </b> </h6> </li>
-                      </ul>
-                </div>
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="lead"><b>{{ student.more.ee_name}}</b></h2>
-                      <ul class="ml-0 mb-0 fa-ul text-muted">
-                        <li class="small"> <b>Parentesco: </b> {{ student.more.ee_kinship }} </li>
-                        <li class="small"><b>Email: </b> {{ student.more.ee_email }}</li>
-                        <li class="small"> <b>Telemóvel: </b> {{ student.more.ee_phone }}</li>
-                        <li class="small"> <b>Profissão: </b> {{ student.more.ee_work }}</li>
-                      </ul>
-                    </div>
-                    <div class="col-5 text-center">
-                      <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar" class="img-circle img-fluid">
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-
-
-          </div>
-
-        <!-- /.card-body -->
-
-        <!-- /.card-footer -->
-
-      <!-- /.card -->
-    </section>
-
-
-
-
-
+                <!-- /.card -->
+            </section>
 
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -142,34 +131,51 @@
                                         <h5 class="text-center display-8">(Processo sem documentos)</h5>
                                     </div>
                                 {% else %}
-                                    {% for pia in pias %}
-                                        <div class="list-group-item">
-                                            <div class="row">
-                                                <div class="col px-4">
-                                                    <div>
-                                                        <div class="float-right">
-                                                            <b>Data do documento:</b> {{ pia.doc_date }}
-                                                        </div>
-                                                        <h3>
-                                                            <a href="{{ pia.get_absolute_url }}">
-                                                                {{ pia.type }}
-                                                            </a>
-                                                        </h3>
-                                                        <p class="mb-0">
-                                                            {{ pia.description }}
-                                                        </p>
-                                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Documentos no processo do aluno:</h3>
                                                 </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body table-responsive p-0" style="height: 300px;">
+                                                    <table class="table table-head-fixed text-nowrap">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Tipo de documento</th>
+                                                            <th>Data do documento</th>
+                                                            <th>Descrição</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for pia in pias %}
+                                                            <tr>
+                                                                <td>{{ pia.id }}</td>
+                                                                <td>
+                                                                    <a href="{{ pia.get_absolute_url }}">
+                                                                        {{ pia.type }}
+                                                                    </a>
+                                                                </td>
+                                                                <td>{{ pia.doc_date|date:"d M Y" }}</td>
+                                                                <td>{{ pia.description }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
                                             </div>
+                                            <!-- /.card -->
                                         </div>
-                                    {% endfor %}
+                                    </div>
+                                    <!-- /.row -->
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
         </div>
     </div>
     <!-- /.content-wrapper -->
