@@ -3,11 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, FileResponse
 import os
+from django.db.models import Q
 
 import core.settings
 from .forms import PiasConsultForm
 from .models import PIAS
 from apps.accounts.models import Student, StudentMore
+from apps.school_structure.models import StudentSchoolClass
 
 
 @login_required(login_url='/users/login/')
@@ -28,12 +30,29 @@ def pias_view(request):
     if request.method == 'POST':
         if form.is_valid():
 
-            student = form.cleaned_data.get('student')
-            student_pias = PIAS.objects.all().filter(
-                student=student,
-            ).order_by('-doc_date')
+            # student = form.cleaned_data.get('student')
+            # student_pias = PIAS.objects.all().filter(
+            #    student=student,
+            # ).order_by('-doc_date')
 
-            return redirect('pias:pias_consult_view', student_id=student.id)
+            query = form.cleaned_data.get('turma')
+            qs2 = StudentSchoolClass.objects.all()
+            qs1 = Student.objects.all()
+            print(qs1)
+            if query is not None:
+                lookups = Q(process_number__icontains=query) | Q(name__icontains=query) | Q(Alunos_turma__school_class__name__icontains=query)
+                print(lookups)
+                qs1 = Student.objects.filter(lookups)
+            context = {
+                "students": qs1,
+            }
+            print(qs1)
+            template_name = 'pias/pias.html'
+            return render(request, template_name, context)
+
+            # ver -> https://stackoverflow.com/questions/73901044/django-python-reference-related-data-from-q-object
+
+            # return redirect('pias:pias_consult_view', student_id=student.id)
 
     template_name = 'pias/pias.html'
 

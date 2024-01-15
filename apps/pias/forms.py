@@ -1,11 +1,7 @@
-from django.forms import ModelForm
+from django import forms
 from .models import PIAS
 
 
-class PiasConsultForm(ModelForm):
+class PiasConsultForm(forms.Form):
     """Formulario para consulta dos PIAS"""
-    class Meta:
-        model = PIAS
-        fields = [
-            'student',
-        ]
+    turma = forms.CharField()

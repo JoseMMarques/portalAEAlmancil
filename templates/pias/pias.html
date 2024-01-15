@@ -39,7 +39,19 @@
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label>N.º de processo:</label>
+                                            {% render_field form.process_number class="form-control" placeholder=field.label %}
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label>Turma:</label>
+                                            {% render_field form.turma class="form-control" placeholder=field.label %}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label>Nome do aluno:</label>
                                             {% render_field form.student class="form-control" placeholder=field.label %}
@@ -63,6 +75,15 @@
                             </ul>
                         {% endfor %}
                     </form>
+                    {% if students %}
+                        <ul>
+                            {% for student in students %}
+                            <li>
+                                <p> {{ student.process_number }} - {{ student.name }} </p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </section>
         </div>

@@ -134,9 +134,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="card">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Documentos no processo do aluno:</h3>
-                                                </div>
+
                                                 <!-- /.card-header -->
                                                 <div class="card-body table-responsive p-0" style="height: 300px;">
                                                     <table class="table table-head-fixed text-nowrap">
@@ -144,8 +142,8 @@
                                                         <tr>
                                                             <th>ID</th>
                                                             <th>Tipo de documento</th>
-                                                            <th>Data do documento</th>
                                                             <th>Descrição</th>
+                                                            <th>Data do documento</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -157,8 +155,8 @@
                                                                         {{ pia.type }}
                                                                     </a>
                                                                 </td>
-                                                                <td>{{ pia.doc_date|date:"d M Y" }}</td>
                                                                 <td>{{ pia.description }}</td>
+                                                                <td>{{ pia.doc_date|date:"d M Y" }}</td>
                                                             </tr>
                                                         {% endfor %}
                                                         </tbody>
