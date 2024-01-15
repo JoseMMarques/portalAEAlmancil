@@ -23,39 +23,29 @@ def pias_home(request):
 def pias_view(request):
     """ View aue controla a página de consulta dos PIAS """
 
-    context = {}
-
     # create object of form
     form = PiasConsultForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
 
-            # student = form.cleaned_data.get('student')
-            # student_pias = PIAS.objects.all().filter(
-            #    student=student,
-            # ).order_by('-doc_date')
+            query = form.cleaned_data.get('search')
+            qs = Student.objects.all()
 
-            query = form.cleaned_data.get('turma')
-            qs2 = StudentSchoolClass.objects.all()
-            qs1 = Student.objects.all()
-            print(qs1)
             if query is not None:
-                lookups = Q(process_number__icontains=query) | Q(name__icontains=query) | Q(Alunos_turma__school_class__name__icontains=query)
-                print(lookups)
-                qs1 = Student.objects.filter(lookups)
-            context = {
-                "students": qs1,
-            }
-            print(qs1)
+                lookups = Q(process_number__icontains=query) | Q(name__icontains=query) \
+                          | Q(Alunos_turma__school_class__name__icontains=query)
+                qs = Student.objects.filter(lookups)
+
+            form = PiasConsultForm(request.GET)
+
             template_name = 'pias/pias.html'
+            context = {
+                'students': qs,
+                'form': form
+            }
             return render(request, template_name, context)
 
-            # ver -> https://stackoverflow.com/questions/73901044/django-python-reference-related-data-from-q-object
-
-            # return redirect('pias:pias_consult_view', student_id=student.id)
-
     template_name = 'pias/pias.html'
-
     context = {'form': form}
     return render(request, template_name, context)
 
@@ -90,6 +80,3 @@ def pias_document_view(request, student_id, doc_slug):
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'filename=some_file.pdf'
         return response
-
-
-
