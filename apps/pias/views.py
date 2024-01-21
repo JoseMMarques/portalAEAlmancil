@@ -6,7 +6,7 @@ import os
 from django.db.models import Q
 
 import core.settings
-from .forms import PiasConsultForm
+from .forms import PiasConsultForm, PiasInsertForm
 from .models import PIAS
 from apps.accounts.models import Student, StudentMore
 from apps.school_structure.models import StudentSchoolClass
@@ -80,3 +80,32 @@ def pias_document_view(request, student_id, doc_slug):
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'filename=some_file.pdf'
         return response
+
+
+def pias_insert_view(request, student_id):
+    """ View aue insere novos documentos nos PIAS """
+
+    # create object of form
+    form = PiasInsertForm(request.POST, request.FILES or None)
+
+    student = get_object_or_404(Student, id=student_id)
+
+    if form.is_valid():
+        print(form.cleaned_data)
+        document = form.save(commit=False)
+        document.student = student
+        document.save()
+        messages.success(request, f"'{document.name}' inserido no processo ")
+        return redirect('pias:pias_consult_view', student_id=student_id)
+
+    print(form.errors)
+    template_name = 'pias/document_add.html'
+    context = {'form': form}
+
+    return render(request, template_name, context)
+
+
+
+
+
+
