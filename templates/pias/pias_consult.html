@@ -122,8 +122,14 @@
                                             <h2 class="text-center display-5">Documentos</h2>
 
                                             <h6 class="text-center display-10">
-                                                <a href="{% url 'pias:pias_insert_view' student_id=student.id %}">Inserir
-                                                    documento</a>
+                                                <a href="{% url 'pias:pias_insert_view' student_id=student.id %}">
+                                                    Inserir documento
+                                                </a>
+                                            </h6>
+                                            <h6 class="text-center display-10">
+                                                <a href="#">
+                                                    Partilhar processo
+                                                </a>
                                             </h6>
 
                                             {% if not pias %}
