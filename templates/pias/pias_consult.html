@@ -15,12 +15,8 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{% url 'user_homepage' %}">Início</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'pias:pias_view' %}">PIA</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'pias:pias_consult_view' student_id=student.id %}">
-                                    {{ student.get_short_name }}
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item active">Consulta</li>
+                            <li class="breadcrumb-item"> {{ student.get_short_name }} </li>
+
                         </ol>
                     </div>
                 </div>
@@ -175,7 +171,7 @@
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                <a href="#" class="small-box-footer">
+                                                                <a href="{% url 'pias:pias_delete_view' student_id=student.id doc_id=pia.id %}" class="small-box-footer">
                                                                     <i class="fas fa-trash"></i>
                                                                 </a>
                                                             </td>

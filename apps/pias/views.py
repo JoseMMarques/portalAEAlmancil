@@ -113,18 +113,12 @@ def pias_edit_view(request, student_id, doc_id):
 
     # get doc from database
     doc = get_object_or_404(PIAS, id=doc_id)
-
     # get student
     student = get_object_or_404(Student, id=student_id)
-
     # create object of form
     form = PiasEditForm(request.POST or None, request.FILES or None, instance=doc)
-
     if request.method == 'POST':
-
         if form.is_valid():
-            print(doc)
-            print("aqui")
             form.save()
             messages.success(request, f"'{doc.name}' alterado com sucesso")
             return redirect('pias:pias_consult_view', student_id=student_id)
@@ -135,5 +129,26 @@ def pias_edit_view(request, student_id, doc_id):
         'student': student,
         'doc': doc,
     }
+    return render(request, template_name, context)
 
+
+def pias_delete_view(request, student_id, doc_id):
+    """Apaga um documento do PIA do aluno indicado"""
+
+    # get doc from database
+    doc = get_object_or_404(PIAS, id=doc_id)
+    # get student
+    student = get_object_or_404(Student, id=student_id)
+    # create object of form
+
+    if request.method == 'POST':
+        messages.success(request, f"'Documento '{doc.name}' removido com sucesso ")
+        doc.delete()
+        return redirect('pias:pias_consult_view', student_id=student_id)
+
+    template_name = 'pias/pias_document_delete.html'
+    context = {
+        'student': student,
+        'doc': doc,
+    }
     return render(request, template_name, context)
