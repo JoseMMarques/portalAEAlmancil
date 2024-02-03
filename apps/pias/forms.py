@@ -20,3 +20,13 @@ class PiasInsertForm(forms.ModelForm):
             'uploaded_to': forms.FileInput,
         }
 
+
+class PiasEditForm(forms.ModelForm):
+    """ Formulário para inserir novo documento no Pias"""
+
+    class Meta:
+        model = PIAS
+        fields = [
+            'school_year', 'type', 'name', 'doc_date', 'description', 'related_docs', 'uploaded_to',
+        ]
+

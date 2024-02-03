@@ -6,7 +6,7 @@ import os
 from django.db.models import Q
 
 import core.settings
-from .forms import PiasConsultForm, PiasInsertForm
+from .forms import PiasConsultForm, PiasInsertForm, PiasEditForm
 from .models import PIAS
 from apps.accounts.models import Student, StudentMore
 from apps.school_structure.models import StudentSchoolClass
@@ -99,13 +99,41 @@ def pias_insert_view(request, student_id):
         return redirect('pias:pias_consult_view', student_id=student_id)
 
     print(form.errors)
-    template_name = 'pias/document_add.html'
-    context = {'form': form}
+    template_name = 'pias/pias_document_add.html'
+    context = {
+        'form': form,
+        'student': student,
+    }
 
     return render(request, template_name, context)
 
 
+def pias_edit_view(request, student_id, doc_id):
+    """ View aue insere novos documentos nos PIAS """
 
+    # get doc from database
+    doc = get_object_or_404(PIAS, id=doc_id)
 
+    # get student
+    student = get_object_or_404(Student, id=student_id)
 
+    # create object of form
+    form = PiasEditForm(request.POST or None, request.FILES or None, instance=doc)
 
+    if request.method == 'POST':
+
+        if form.is_valid():
+            print(doc)
+            print("aqui")
+            form.save()
+            messages.success(request, f"'{doc.name}' alterado com sucesso")
+            return redirect('pias:pias_consult_view', student_id=student_id)
+
+    template_name = 'pias/pias_document_edit.html'
+    context = {
+        'form': form,
+        'student': student,
+        'doc': doc,
+    }
+
+    return render(request, template_name, context)
