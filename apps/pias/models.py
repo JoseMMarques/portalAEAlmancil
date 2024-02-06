@@ -1,7 +1,16 @@
+import os
+
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 import datetime
+from django.conf import settings
+import unicodedata
+
+
+def remove_accents(input_str):
+    nfkd_form = unicodedata.normalize('NFKD', input_str)
+    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
 def path_and_rename(instance, filename):
@@ -12,16 +21,17 @@ def path_and_rename(instance, filename):
     now = datetime.datetime.now()
     date_string = now.strftime("%Y%m%d%H%M%S")
 
-    upload_to = 'media/PIAS'
+    upload_to = 'PIAS'
     extension = filename.split('.')[-1]
     student_process_number = instance.student.process_number
     doc_date = str(instance.doc_date)
     doc_date_formated = doc_date.replace('-', '')
     doc_type = instance.type
     doc_type_formated = str(doc_type).replace(' ', '')
+    doc_type_formated = remove_accents(doc_type_formated)
 
     new_filename = upload_to + "/" + student_process_number + "_" + \
-        doc_date_formated + "_" + doc_type_formated + "_" + date_string + "." + extension
+                   doc_date_formated + "_" + doc_type_formated + "_" + date_string + "." + extension
 
     return new_filename
 
@@ -157,6 +167,40 @@ class PIAS(models.Model):
             self.slug = slugify(self.name) + '_' + str(self.id)
             self.save()
 
+    def rename_file_edited_document(self, filename):
+        """ Funtion to rename un edited file in the PIAS model"""
+
+        upload_to = str(settings.MEDIA_PIAS)
+        old_path = filename
+        print(upload_to)
+        # filename = str(self.uploaded_to)
+        print("aqui")
+        print(filename)
+        # vai ao nome antigo do ficheiro buscar os dados corretos
+        student_process_number = filename.split('_')[-4].split("\\")[-1]
+        print('student_number')
+        print(student_process_number)
+        doc_date_formated = filename.split('_')[-3]
+        date_string_and_extension = filename.split('_')[-1]
+        doc_type = self.type
+        doc_type_formated = str(doc_type).replace(' ', '')
+        doc_type_formated = remove_accents(doc_type_formated)
+
+        # localização do ficheiro com o nome do ficheiro incorporado
+        new_path = upload_to + "/" + student_process_number + "_" + \
+                       doc_date_formated + "_" + doc_type_formated + "_" + date_string_and_extension
+
+        print('novo caminho')
+        print(new_path)
+
+        # renomeia o ficheiro no diretório PIAS
+        # os.remove(old_path)
+        os.rename(old_path, new_path)
+
+        # Grava a localização do ficheiro na base de dados
+        self.uploaded_to = new_path
+
+
 # Upload files
 # https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
 
@@ -167,3 +211,6 @@ class PIAS(models.Model):
 # rename a file and upload
 # https://stackoverflow.com/questions/64633436/how-do-i-rename-image-that-i-uploaded-through-django-rest-framework
 # https://stackoverflow.com/questions/15140942/django-imagefield-change-file-name-on-upload
+
+# apagar ficheiros de diretorios
+# https://stackoverflow.com/questions/33080360/how-to-delete-files-from-filesystem-using-post-delete-django-1-8

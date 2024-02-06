@@ -69,10 +69,9 @@ def pias_consult_view(request, student_id):
 
 
 def pias_document_view(request, student_id, doc_slug):
-
     doc = get_object_or_404(PIAS, slug=doc_slug)
 
-    doc_full_path = str(core.settings.MEDIA_ROOT) + '/' + str(doc.uploaded_to)
+    doc_full_path = str(doc.uploaded_to)
 
     print(doc_full_path)
 
@@ -91,14 +90,13 @@ def pias_insert_view(request, student_id):
     student = get_object_or_404(Student, id=student_id)
 
     if form.is_valid():
-        print(form.cleaned_data)
         document = form.save(commit=False)
         document.student = student
         document.save()
         messages.success(request, f"'{document.name}' inserido no processo ")
         return redirect('pias:pias_consult_view', student_id=student_id)
 
-    print(form.errors)
+    # print(form.errors)
     template_name = 'pias/pias_document_add.html'
     context = {
         'form': form,
@@ -113,13 +111,18 @@ def pias_edit_view(request, student_id, doc_id):
 
     # get doc from database
     doc = get_object_or_404(PIAS, id=doc_id)
+    old_filename = doc.uploaded_to.path
+    print(old_filename)
     # get student
     student = get_object_or_404(Student, id=student_id)
     # create object of form
     form = PiasEditForm(request.POST or None, request.FILES or None, instance=doc)
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            document = form.save(commit=False)
+            # renomeia o documento
+            document.rename_file_edited_document(old_filename)
+            document.save()
             messages.success(request, f"'{doc.name}' alterado com sucesso")
             return redirect('pias:pias_consult_view', student_id=student_id)
 
@@ -139,11 +142,14 @@ def pias_delete_view(request, student_id, doc_id):
     doc = get_object_or_404(PIAS, id=doc_id)
     # get student
     student = get_object_or_404(Student, id=student_id)
-    # create object of form
 
+    # create object of form
     if request.method == 'POST':
         messages.success(request, f"'Documento '{doc.name}' removido com sucesso ")
+        # remove o registo da base de dados
         doc.delete()
+        # remove o ficheiro do diretorio
+        os.remove(doc.uploaded_to.path)
         return redirect('pias:pias_consult_view', student_id=student_id)
 
     template_name = 'pias/pias_document_delete.html'
