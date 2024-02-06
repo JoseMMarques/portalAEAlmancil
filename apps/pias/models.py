@@ -214,3 +214,6 @@ class PIAS(models.Model):
 
 # apagar ficheiros de diretorios
 # https://stackoverflow.com/questions/33080360/how-to-delete-files-from-filesystem-using-post-delete-django-1-8
+
+# VER ESTE PARA ALTERAR FICHEIRO NO DIRETORIO
+# https://stackoverflow.com/questions/73019488/overwrite-file-if-the-name-is-same-in-django
