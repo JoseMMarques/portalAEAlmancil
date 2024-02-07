@@ -10,6 +10,7 @@ from .forms import PiasConsultForm, PiasInsertForm, PiasEditForm
 from .models import PIAS
 from apps.accounts.models import Student, StudentMore
 from apps.school_structure.models import StudentSchoolClass
+from django.conf import settings
 
 
 @login_required(login_url='/users/login/')
@@ -75,7 +76,7 @@ def pias_document_view(request, student_id, doc_slug):
 
     print(doc_full_path)
 
-    with open(doc_full_path, 'rb') as pdf:
+    with open(str(settings.MEDIA_ROOT) + "/" + doc_full_path, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'filename=some_file.pdf'
         return response
@@ -92,7 +93,11 @@ def pias_insert_view(request, student_id):
     if form.is_valid():
         document = form.save(commit=False)
         document.student = student
+        print('na view antes de gravar')
+        print(document.uploaded_to)
         document.save()
+        print('na view DEPOIS de gravar')
+        print(document.uploaded_to)
         messages.success(request, f"'{document.name}' inserido no processo ")
         return redirect('pias:pias_consult_view', student_id=student_id)
 
@@ -119,9 +124,17 @@ def pias_edit_view(request, student_id, doc_id):
     form = PiasEditForm(request.POST or None, request.FILES or None, instance=doc)
     if request.method == 'POST':
         if form.is_valid():
+            #file = request.FILES['uploaded_to']
+            #print(file)
+            print(request)
             document = form.save(commit=False)
             # renomeia o documento
-            document.rename_file_edited_document(old_filename)
+            new_path = document.rename_file_edited_document(old_filename)
+
+            #os.remove(old_filename)
+
+            # fs = FileSystemStorage()
+            # fs.save(new_path, file)
             document.save()
             messages.success(request, f"'{doc.name}' alterado com sucesso")
             return redirect('pias:pias_consult_view', student_id=student_id)

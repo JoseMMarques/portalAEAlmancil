@@ -21,7 +21,7 @@ def path_and_rename(instance, filename):
     now = datetime.datetime.now()
     date_string = now.strftime("%Y%m%d%H%M%S")
 
-    upload_to = 'PIAS'
+    upload_to = str(settings.MEDIA_PIAS)
     extension = filename.split('.')[-1]
     student_process_number = instance.student.process_number
     doc_date = str(instance.doc_date)
@@ -29,9 +29,14 @@ def path_and_rename(instance, filename):
     doc_type = instance.type
     doc_type_formated = str(doc_type).replace(' ', '')
     doc_type_formated = remove_accents(doc_type_formated)
+    # print(doc_type_formated)
 
     new_filename = upload_to + "/" + student_process_number + "_" + \
                    doc_date_formated + "_" + doc_type_formated + "_" + date_string + "." + extension
+
+    new_filename = str(new_filename).replace("\\", "/")
+    print('sera mesmo?')
+    print(new_filename)
 
     return new_filename
 
@@ -125,7 +130,8 @@ class PIAS(models.Model):
         help_text='Deixar em branco para criar um slug automático e único'
     )
     uploaded_to = models.FileField(
-        upload_to=path_and_rename
+        upload_to=path_and_rename,
+        max_length=500,
     )
     related_docs = models.ManyToManyField(
         "self",
@@ -195,10 +201,10 @@ class PIAS(models.Model):
 
         # renomeia o ficheiro no diretório PIAS
         # os.remove(old_path)
-        os.rename(old_path, new_path)
+        # os.rename(old_path, new_path)
 
-        # Grava a localização do ficheiro na base de dados
-        self.uploaded_to = new_path
+
+        return new_path
 
 
 # Upload files

@@ -144,6 +144,8 @@
                                                         <th>Tipo de documento</th>
                                                         <th>Resumo</th>
                                                         <th>Data do documento</th>
+                                                        <th>Criado a</th>
+                                                        <th>Modificado a</th>
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
@@ -158,8 +160,10 @@
                                                                     {{ pia.type }}
                                                                 </a>
                                                             </td>
-                                                            <td>{{ pia.description }}</td>
+                                                            <td>{{ pia.description | truncatechars:50 }}</td>
                                                             <td>{{ pia.doc_date|date:"d M Y" }}</td>
+                                                            <td>{{ pia.created|date:"d M Y" }}</td>
+                                                            <td>{{ pia.modified|date:"d M Y" }}</td>
                                                             <td>
                                                                 <a href="{{ pia.get_absolute_url }}" target="_blank">
                                                                     <i class="fas fa-eye"></i>
