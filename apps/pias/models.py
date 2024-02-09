@@ -29,15 +29,11 @@ def path_and_rename(instance, filename):
     doc_type = instance.type
     doc_type_formated = str(doc_type).replace(' ', '')
     doc_type_formated = remove_accents(doc_type_formated)
-    # print(doc_type_formated)
 
     new_filename = upload_to + "/" + student_process_number + "_" + \
                    doc_date_formated + "_" + doc_type_formated + "_" + date_string + "." + extension
 
     new_filename = str(new_filename).replace("\\", "/")
-    print('sera mesmo?')
-    print(new_filename)
-
     return new_filename
 
 
@@ -173,38 +169,30 @@ class PIAS(models.Model):
             self.slug = slugify(self.name) + '_' + str(self.id)
             self.save()
 
-    def rename_file_edited_document(self, filename):
+    def rename_file_edited_document(self, old_file_path):
         """ Funtion to rename un edited file in the PIAS model"""
-
         upload_to = str(settings.MEDIA_PIAS)
-        old_path = filename
-        print(upload_to)
-        # filename = str(self.uploaded_to)
-        print("aqui")
-        print(filename)
         # vai ao nome antigo do ficheiro buscar os dados corretos
-        student_process_number = filename.split('_')[-4].split("\\")[-1]
-        print('student_number')
-        print(student_process_number)
-        doc_date_formated = filename.split('_')[-3]
-        date_string_and_extension = filename.split('_')[-1]
+        student_process_number = old_file_path.split('_')[-4].split("\\")[-1]
+        doc_date = str(self.doc_date)
+        doc_date_formated = doc_date.replace('-', '')
+        date_string_and_extension = old_file_path.split('_')[-1]
         doc_type = self.type
         doc_type_formated = str(doc_type).replace(' ', '')
         doc_type_formated = remove_accents(doc_type_formated)
 
         # localização do ficheiro com o nome do ficheiro incorporado
-        new_path = upload_to + "/" + student_process_number + "_" + \
+        new_file_path = upload_to + "/" + student_process_number + "_" + \
                        doc_date_formated + "_" + doc_type_formated + "_" + date_string_and_extension
 
-        print('novo caminho')
-        print(new_path)
-
+        # formata o path
+        new_file_path = str(new_file_path).replace("\\", "/")
         # renomeia o ficheiro no diretório PIAS
-        # os.remove(old_path)
-        # os.rename(old_path, new_path)
+        os.rename(old_file_path, new_file_path)
+        # atualiza o campo "uploaded_to"
+        self.uploaded_to = new_file_path.split('/')[-2] + "/" + new_file_path.split('/')[-1]
 
-
-        return new_path
+        return new_file_path
 
 
 # Upload files
