@@ -179,3 +179,4 @@ class EmployeeAdmin(admin.ModelAdmin):
     inlines = [
         EmployeeMoreInline,
     ]
+

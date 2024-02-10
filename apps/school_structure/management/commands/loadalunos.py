@@ -52,10 +52,9 @@ class Command(BaseCommand):
                 user.save()
                 StudentMore.objects.create(
                     user=user,
-                    email_ee=fields[6],
-                    name_ee=fields[7],
-                    phone_ee_1=fields[8],
-                    phone_ee_2=fields[5],
+                    ee_email=fields[6],
+                    ee_name=fields[7],
+                    ee_phone=fields[8],
                 )
 
                 self.stdout.write(

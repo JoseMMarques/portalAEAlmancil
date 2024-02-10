@@ -41,7 +41,7 @@ class SchoolYear(models.Model):
     )
     modified = models.DateTimeField(
         'Modificado em',
-        auto_now_add=True,
+        auto_now=True,
     )
 
     class Meta:
@@ -302,7 +302,7 @@ class TeacherSchoolClass(models.Model):
 
 
 class StudentSchoolClass(models.Model):
-    """Join Table para professores por turma"""
+    """Join Table para alunos por turma"""
 
     student = models.ForeignKey(
         'accounts.Student',
@@ -311,7 +311,7 @@ class StudentSchoolClass(models.Model):
         on_delete=models.CASCADE
     )
     school_class = models.ForeignKey(
-        'school_structure.SchoolClass',
+        'SchoolClass',
         verbose_name='Turma',
         related_name='Alunos_turma',
         on_delete=models.CASCADE

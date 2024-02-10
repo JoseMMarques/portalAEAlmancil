@@ -62,7 +62,7 @@ class PiasType(models.Model):
     )
     modified = models.DateTimeField(
         'Modificado em',
-        auto_now_add=True,
+        auto_now=True,
     )
 
     class Meta:
@@ -140,7 +140,7 @@ class PIAS(models.Model):
     )
     modified = models.DateTimeField(
         'Modificado em',
-        auto_now_add=True,
+        auto_now=True,
     )
 
     class Meta:
@@ -154,7 +154,7 @@ class PIAS(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'pias:pias_document_view',
+            'pias:pias_document_pdf_view',
             kwargs={
                 'student_id': self.student_id,
                 'doc_slug': self.slug
