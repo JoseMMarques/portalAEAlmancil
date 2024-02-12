@@ -452,3 +452,36 @@ class CargoDT(models.Model):
         if not self.slug:
             self.slug = "DT-" + slugify(self.teacher_dt.get_short_name()) + "-" + str(self.id)
             self.save()
+
+
+class StudentSchoolRoute(models.Model):
+    """Um modelo para registar o percurso escolar do aluno """
+
+    school_year = models.ForeignKey(
+        'SchoolYear',
+        verbose_name='Ano Letivo',
+        on_delete=models.CASCADE
+    )
+    student = models.ForeignKey(
+        'accounts.Student',
+        verbose_name='Aluno',
+        related_name='percurso_aluno',
+        on_delete=models.CASCADE
+    )
+    school = models.CharField(
+        'Agrupamento/Escola',
+        max_length=254,
+    )
+    created = models.DateTimeField(
+        'Criado em',
+        auto_now_add=True
+    )
+    modified = models.DateTimeField(
+        'modificado em',
+        auto_now=True
+    )
+
+    class Meta:
+        verbose_name = "Percurso do Aluno"
+        verbose_name_plural = "Percursos dos alunos"
+        ordering = ('school_year', 'created',)

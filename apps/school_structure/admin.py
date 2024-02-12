@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import SchoolYear, School, SchoolClass, StudentSchoolClass, TeacherSchoolClass, CargoDT, Subject
+from .models import SchoolYear, School, SchoolClass, StudentSchoolClass, \
+    TeacherSchoolClass, CargoDT, Subject, StudentSchoolRoute
 
 
 class SchoolYearAdmin(admin.ModelAdmin):
@@ -185,3 +186,20 @@ class SubjectAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Subject, SubjectAdmin)
+
+
+class StudentSchoolRouteAdmin(admin.ModelAdmin):
+    """Definições do Ano Letivo no Admin"""
+
+    list_display = [
+        'student', 'school_year', 'school', 'created', 'modified'
+    ]
+    search_fields = [
+        'student', 'school_year', 'school', 'created', 'modified'
+    ]
+    list_filter = [
+        'student', 'school_year', 'school', 'created', 'modified'
+    ]
+
+
+admin.site.register(StudentSchoolRoute, StudentSchoolRouteAdmin)

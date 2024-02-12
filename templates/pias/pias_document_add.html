@@ -159,7 +159,7 @@
                                         <h2 class="text-center display-5">Inserir Documento no PIA</h2>
                                         <h6 class="text-center display-10">
                                             <a href="{% url 'pias:pias_consult_view' student_id=student.id %}">
-                                                Voltar
+                                                | Voltar |
                                             </a>
                                         </h6>
 
@@ -184,13 +184,13 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label><i class="far fa-calendar-check mr-1"></i>Data</label>
+                                                            <label><i class="far fa-calendar-check mr-1"></i>Data do documento</label>
                                                             {% render_field form.doc_date class="form-control" placeholder="formato: aaaa-mm-dd" %}
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label><i class="far fa-file-pdf mr-1"></i>Ficheiro PDF</label>
-                                                            {% render_field form.uploaded_to class="form-control" placeholder="Escolha o ficheiro" %}
+                                                            {% render_field form.uploaded_to class="form-control-file" placeholder="Escolha o ficheiro" %}
                                                         </div>
                                                     </div>
                                                 </div>

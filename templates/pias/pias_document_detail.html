@@ -161,14 +161,14 @@
                                         <h2 class="text-center display-5">Documento - ID. {{ document.id}} </h2>
                                         <h6 class="text-center display-10">
                                             <a href="{% url 'pias:pias_consult_view' student_id=student.id %}">
-                                                Voltar
+                                                | Voltar |
                                             </a>
                                         </h6>
                                         <hr>
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="card-body">
-                                                    <div class="card-body">
+
                                                         <strong><i class="fas fa-paperclip mr-1"></i> Ano letivo</strong>
                                                         <p class="text-muted">{{ document.school_year }}</p>
                                                         <hr>
@@ -182,19 +182,19 @@
                                                             documento</strong>
                                                         <p class="text-muted">{{ document.doc_date }}</p>
                                                         <hr>
-                                                        <strong><i class="far fa-file-pdf mr-1"></i>PDF</strong>
+                                                        <strong><i class="far fa-file-pdf mr-1"></i>Ficheiro PDF</strong>
                                                         <p class="text-muted">
                                                             <a href="{{ document.get_absolute_url }}" target="_blank">
                                                                 {{ document.uploaded_to }}
                                                             </a>
                                                         </p>
-                                                    </div>
+
                                                 </div>
                                             </div>
 
                                             <div class="col-6">
                                                 <div class="card-body">
-                                                    <div class="card-body">
+
                                                         <strong><i class="fas fa-file-signature mr-1"></i>
                                                             Notas</strong>
                                                         <p class="text-muted">{{ document.description }}</p>
@@ -218,7 +218,7 @@
                                                                 </li>
                                                             {% endfor %}
                                                         </ul>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>

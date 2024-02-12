@@ -11,7 +11,8 @@ import datetime
 from .forms import PiasConsultForm, PiasInsertForm, PiasEditForm
 from .models import PIAS
 from apps.accounts.models import Student, Teacher
-from apps.school_structure.models import CargoDT, SchoolYear, StudentSchoolClass
+from apps.school_structure.models import CargoDT, SchoolYear, StudentSchoolClass, \
+    StudentSchoolRoute
 
 
 def get_school_year_by_today_date(data):
@@ -87,9 +88,13 @@ def pias_consult_view(request, student_id):
     student_pias = PIAS.objects.all().filter(
         student=student_id,
     ).order_by('-doc_date')
+    student_route = StudentSchoolRoute.objects.all().filter(
+        student=student_id,
+    )
     context = {
         "pias": student_pias,
         "student": student,
+        "student_route": student_route,
     }
     template_name = 'pias/pias_consult.html'
     return render(request, template_name, context)
