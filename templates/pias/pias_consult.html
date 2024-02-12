@@ -176,10 +176,10 @@
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Documento</th>
+                                                        <th>Nome</th>
                                                         <th>Resumo</th>
-                                                        <th>Data do documento</th>
+                                                        <th>Data do doc.</th>
                                                         <th>Criado a</th>
-                                                        <th>Editado a</th>
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
@@ -194,10 +194,10 @@
                                                                     {{ pia.type }}
                                                                 </a>
                                                             </td>
-                                                            <td>{{ pia.description | truncatechars:50 }}</td>
+                                                            <td>{{ pia.name | truncatechars:30}}</td>
+                                                            <td>{{ pia.description | truncatechars:45 }}</td>
                                                             <td>{{ pia.doc_date|date:"d-m-Y" }}</td>
                                                             <td>{{ pia.created|date:"d-m-Y" }}</td>
-                                                            <td>{{ pia.modified|date:"d-m-Y" }}</td>
                                                             <td>
                                                                 <a href="{{ pia.get_absolute_url }}" target="_blank">
                                                                     <i class="far fa-file-pdf"></i>

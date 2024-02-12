@@ -150,7 +150,7 @@ class PIAS(models.Model):
 
     def __str__(self):
         """returns the name of the object"""
-        return self.name
+        return "ID. " + str(self.id) + " - " + str(self.type) + " - " + str(self.doc_date)
 
     def get_absolute_url(self):
         return reverse(

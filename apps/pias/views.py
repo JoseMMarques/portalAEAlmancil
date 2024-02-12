@@ -1,3 +1,4 @@
+from django.forms import ClearableFileInput
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -172,8 +173,12 @@ def pias_edit_view(request, student_id, doc_id):
     doc = get_object_or_404(PIAS, id=doc_id)
     old_file_path = doc.uploaded_to.path
     old_file_name = str(doc.uploaded_to).split('/')[-1]
-
-    form = PiasEditForm(student_id, doc_id, request.POST or None, request.FILES or None, instance=doc)
+    form = PiasEditForm(
+        student_id, doc_id,
+        request.POST or None,
+        request.FILES or None,
+        instance=doc,
+    )
     if request.method == 'POST':
         if form.is_valid():
             document = form.save(commit=False)
@@ -203,4 +208,6 @@ def pias_edit_view(request, student_id, doc_id):
 @login_required(login_url='/users/login/')
 def pias_documents_detail_view(request, doc_id):
     """Consulta de documento com todos os campos"""
+
+
 

@@ -158,69 +158,76 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card card-primary">
-                                        <h2 class="text-center display-5">{{ document.type}} </h2>
-                                        <h5 class="text-center display-5">(Documento com ID. {{ document.id}})</h5>
+                                        <h2 class="text-center display-5">Documento - ID. {{ document.id}} </h2>
                                         <h6 class="text-center display-10">
                                             <a href="{% url 'pias:pias_consult_view' student_id=student.id %}">
                                                 Voltar
                                             </a>
                                         </h6>
-
-
-
-                                            <div class="row">
-                                                <div class="col-6">
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="card-body">
                                                     <div class="card-body">
-                                                        <div class="card-body">
-                                                            <strong><i class="far fa-file-alt mr-1"></i> Nome do documento</strong>
-                                                            <p class="text-muted">{{ document.name }}</p>
-                                                            <hr>
-                                                            <strong><i class="far fa-calendar-check mr-1"></i> Data do documento</strong>
-                                                            <p class="text-muted">{{ document.doc_date}}</p>
-                                                            <hr>
-                                                            <strong><i class="far fa-file-pdf mr-1"></i>PDF</strong>
-                                                            <p class="text-muted">
-                                                                <a href="{{ document.get_absolute_url }}" target="_blank">
-                                                                    {{ document.uploaded_to }}
-                                                                </a>
-                                                            </p>
-                                                            <hr>
-                                                            <strong><i class="far fa-copy mr-1"></i> Documentos relacionados</strong>
-                                                            <ul class="text-muted">
-                                                                {% for doc in document.related_docs.all %}
-                                                                    <li>
-                                                                        <a href="{{ doc.get_absolute_url }}"
-                                                                           target="_blank">
-                                                                            {{ doc.type }} - {{ doc }}
-                                                                        </a>
-                                                                    </li>
-                                                                {% endfor %}
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <div class="card-body">
-                                                        <div class="card-body">
-                                                            <strong><i class="fas fa-file-signature mr-1"></i> Notas</strong>
-                                                            <p class="text-muted">{{ document.description }}</p>
-                                                            <hr>
-                                                            <strong><i class="far fa-calendar-plus mr-1"></i> Criado a</strong>
-                                                            <p class="text-muted">{{ document.created}}</p>
-                                                            <hr>
-                                                            <strong><i class="fas fa-calendar-day mr-1"></i>Editado a</strong>
-                                                            <p class="text-muted">{{ document.modified}}</p>
-                                                            <hr>
-                                                        </div>
+                                                        <strong><i class="fas fa-paperclip mr-1"></i> Ano letivo</strong>
+                                                        <p class="text-muted">{{ document.school_year }}</p>
+                                                        <hr>
+                                                        <strong><i class="far fa-bookmark mr-1"></i> Tipo de documento</strong>
+                                                        <p class="text-muted">{{ document.type }}</p>
+                                                        <hr>
+                                                        <strong><i class="far fa-file-alt mr-1"></i> Nome</strong>
+                                                        <p class="text-muted">{{ document.name }}</p>
+                                                        <hr>
+                                                        <strong><i class="far fa-calendar-check mr-1"></i> Data do
+                                                            documento</strong>
+                                                        <p class="text-muted">{{ document.doc_date }}</p>
+                                                        <hr>
+                                                        <strong><i class="far fa-file-pdf mr-1"></i>PDF</strong>
+                                                        <p class="text-muted">
+                                                            <a href="{{ document.get_absolute_url }}" target="_blank">
+                                                                {{ document.uploaded_to }}
+                                                            </a>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-footer">
-                                                <a class="btn btn-primary" href="{% url 'pias:pias_consult_view' student_id=student.id %}">
-                                                    Voltar
-                                                </a>
+
+                                            <div class="col-6">
+                                                <div class="card-body">
+                                                    <div class="card-body">
+                                                        <strong><i class="fas fa-file-signature mr-1"></i>
+                                                            Notas</strong>
+                                                        <p class="text-muted">{{ document.description }}</p>
+                                                        <hr>
+                                                        <strong><i class="far fa-calendar-plus mr-1"></i> Criado
+                                                            a</strong>
+                                                        <p class="text-muted">{{ document.created }}</p>
+                                                        <hr>
+                                                        <strong><i class="fas fa-calendar-day mr-1"></i>Editado
+                                                            a</strong>
+                                                        <p class="text-muted">{{ document.modified }}</p>
+                                                        <hr>
+                                                        <strong><i class="far fa-copy mr-1"></i> Documentos relacionados</strong>
+                                                        <ul class="text-muted">
+                                                            {% for doc in document.related_docs.all %}
+                                                                <li>
+                                                                    <a href="{{ doc.get_absolute_url }}"
+                                                                       target="_blank">
+                                                                        {{ doc }}
+                                                                    </a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a class="btn btn-primary"
+                                               href="{% url 'pias:pias_consult_view' student_id=student.id %}">
+                                                Voltar
+                                            </a>
+                                        </div>
 
 
                                     </div>

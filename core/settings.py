@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.school_structure',
     'apps.pias',
 
+
 ]
 
 MIDDLEWARE = [
