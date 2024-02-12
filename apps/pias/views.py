@@ -127,7 +127,7 @@ def pias_document_pdf_view(request, student_id, doc_slug):
 def pias_insert_view(request, student_id):
     """ View aue insere novos documentos nos PIAS """
     student = get_object_or_404(Student, id=student_id)
-    form = PiasInsertForm(request.POST, request.FILES or None)
+    form = PiasInsertForm(student_id, request.POST, request.FILES or None)
     if form.is_valid():
         document = form.save(commit=False)
         document.student = student
@@ -173,7 +173,7 @@ def pias_edit_view(request, student_id, doc_id):
     old_file_path = doc.uploaded_to.path
     old_file_name = str(doc.uploaded_to).split('/')[-1]
 
-    form = PiasEditForm(request.POST or None, request.FILES or None, instance=doc)
+    form = PiasEditForm(student_id, doc_id, request.POST or None, request.FILES or None, instance=doc)
     if request.method == 'POST':
         if form.is_valid():
             document = form.save(commit=False)

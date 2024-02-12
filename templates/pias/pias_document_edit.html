@@ -43,10 +43,10 @@
                     <div class="col-md-5 offset-md-1">
                         <div class="card card-success shadow-sm collapsed-card">
                             <div class="card-header">
-                                <h3 class="card-title">Dados de {{ student.name }}</h3>
+                                <h3 class="card-title">Dados de <b><i>{{ student.name }}</i></b></h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
+                                        <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                                 <!-- /.card-tools -->
@@ -101,10 +101,10 @@
                     <div class="col-12 col-sm-6 col-md-5 d-flex align-items-stretch flex-column">
                         <div class="card card-success shadow-sm collapsed-card">
                             <div class="card-header">
-                                <h3 class="card-title">Encarregado de Educação</h3>
+                                <h3 class="card-title">Dados de <b><i>Encarregado de Educação</i></b></h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
+                                        <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                                 <!-- /.card-tools -->
@@ -115,6 +115,10 @@
                                     <div class="col-7">
                                         <table class="table">
                                             <tbody>
+                                            <tr>
+                                                <td><strong>Nome </strong></td>
+                                                <td>{{ student.more.ee_name }}</td>
+                                            </tr>
                                             <tr>
                                                 <td><strong>Parentesco </strong></td>
                                                 <td>{{ student.more.ee_kinship }}</td>

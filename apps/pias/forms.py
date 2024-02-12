@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.admin.widgets import FilteredSelectMultiple
+
 from .models import PIAS
 
 
@@ -20,6 +22,12 @@ class PiasInsertForm(forms.ModelForm):
             'uploaded_to': forms.FileInput,
         }
 
+    def __init__(self, student_id, *args, **kwargs):
+        super(PiasInsertForm, self).__init__(*args, **kwargs)
+        # para aparecerem só documentos relacionados do próprio aluno
+        if student_id:
+            self.fields['related_docs'].queryset = PIAS.objects.filter(student_id=student_id)
+
 
 class PiasEditForm(forms.ModelForm):
     """ Formulário para inserir novo documento no Pias"""
@@ -30,3 +38,8 @@ class PiasEditForm(forms.ModelForm):
             'school_year', 'type', 'name', 'doc_date', 'description', 'related_docs', 'uploaded_to',
         ]
 
+    def __init__(self, student_id, doc_id, *args, **kwargs):
+        super(PiasEditForm, self).__init__(*args, **kwargs)
+        # para aparecerem só documentos relacionados do próprio aluno
+        if student_id:
+            self.fields['related_docs'].queryset = PIAS.objects.filter(student_id=student_id).exclude(id=doc_id)
