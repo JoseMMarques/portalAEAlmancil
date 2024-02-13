@@ -28,7 +28,7 @@
         </section>
 
 
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="margin-top: 0">
 
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -38,118 +38,6 @@
                 <!-- /.container-fluid -->
             </section>
             <!-- Main content -->
-            <!-- Main content -->
-            <section class="content">
-                <!-- Default box -->
-                <div class="row">
-                    <div class="col-md-5 offset-md-1">
-                        <div class="card card-success shadow-sm collapsed-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Dados de <b><i>{{ student.name }}</i></b></h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                                <!-- /.card-tools -->
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>N.º Processo </strong></td>
-                                                    <td>{{ student.process_number }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Email </strong></td>
-                                                    <td>{{ student.email }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Telemóvel </strong></td>
-                                                    <td>{{ student.phone }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Data de nascimento </strong></td>
-                                                    <td>{{ student.birth_date }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Idade </strong></td>
-                                                    <td>{{ student.get_age }} anos</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Morada </strong></td>
-                                                    <td>
-                                                        <p>{{ student.address }}</p>
-                                                        <p>{{ student.postal_code }} - {{ student.locality }}</p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-5 text-center">
-                                        <img src="../../dist/img/user2-160x160.jpg" alt="user-avatar"
-                                             class="img-circle img-fluid">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-
-                    <div class="col-12 col-sm-6 col-md-5 d-flex align-items-stretch flex-column">
-                        <div class="card card-success shadow-sm collapsed-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Dados de <b><i>Encarregado de Educação</i></b></h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                                <!-- /.card-tools -->
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <table class="table">
-                                            <tbody>
-                                            <tr>
-                                                <td><strong>Nome </strong></td>
-                                                <td>{{ student.more.ee_name }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Parentesco </strong></td>
-                                                <td>{{ student.more.ee_kinship }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Email </strong></td>
-                                                <td>{{ student.more.ee_email }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Telemóvel </strong></td>
-                                                <td>{{ student.more.ee_phone }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Profissão </strong></td>
-                                                <td>{{ student.more.ee_work }}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                </div>
-                <!-- /.card -->
-            </section>
-
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">

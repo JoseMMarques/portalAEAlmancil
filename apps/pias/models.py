@@ -1,11 +1,10 @@
 import os
-
+import datetime
+import unicodedata
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-import datetime
 from django.conf import settings
-import unicodedata
 
 
 def remove_accents(input_str):
@@ -193,6 +192,43 @@ class PIAS(models.Model):
         self.uploaded_to = new_file_path.split('/')[-2] + "/" + new_file_path.split('/')[-1]
 
         return new_file_path
+
+
+class StudentSchoolRoute(models.Model):
+    """Um modelo para registar o percurso escolar do aluno no PIA """
+
+    school_year = models.ForeignKey(
+        'school_structure.SchoolYear',
+        verbose_name='Ano Letivo',
+        on_delete=models.CASCADE
+    )
+    student = models.ForeignKey(
+        'accounts.Student',
+        verbose_name='Aluno',
+        related_name='percurso_aluno',
+        on_delete=models.CASCADE
+    )
+    school = models.CharField(
+        'Agrupamento/Escola',
+        max_length=254,
+    )
+    created = models.DateTimeField(
+        'Criado em',
+        auto_now_add=True
+    )
+    modified = models.DateTimeField(
+        'modificado em',
+        auto_now=True
+    )
+
+    class Meta:
+        verbose_name = "Percurso do Aluno"
+        verbose_name_plural = "Percursos dos alunos"
+        ordering = ('school_year', 'created',)
+
+    def __str__(self):
+        """returns the name of the object"""
+        return self.school
 
 
 # Upload files

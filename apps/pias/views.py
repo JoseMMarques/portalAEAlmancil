@@ -1,18 +1,17 @@
-from django.forms import ClearableFileInput
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse, FileResponse
-import os
+from django.http import HttpResponse
 from django.db.models import Q
-from django.views.generic import DetailView
-
 import datetime
-from .forms import PiasConsultForm, PiasInsertForm, PiasEditForm
-from .models import PIAS
-from apps.accounts.models import Student, Teacher
-from apps.school_structure.models import CargoDT, SchoolYear, StudentSchoolClass, \
-    StudentSchoolRoute
+import os
+
+from .forms import PiasConsultForm, PiasInsertForm, PiasEditForm, \
+    StudentSchoolRouteAddForm, StudentSchoolRouteEditForm
+from .models import PIAS, StudentSchoolRoute
+from apps.accounts.models import Student
+from apps.school_structure.models import CargoDT, SchoolYear, \
+    StudentSchoolClass
 
 
 def get_school_year_by_today_date(data):
@@ -211,8 +210,66 @@ def pias_edit_view(request, student_id, doc_id):
 
 
 @login_required(login_url='/users/login/')
-def pias_documents_detail_view(request, doc_id):
-    """Consulta de documento com todos os campos"""
+def student_school_route_add_view(request, student_id):
+    """ View aue insere novos documentos nos PIAS """
+    student = get_object_or_404(Student, id=student_id)
+    form = StudentSchoolRouteAddForm(request.POST)
+    if form.is_valid():
+        school_route = form.save(commit=False)
+        school_route.student = student
+        school_route.save()
+        messages.success(request, f"'{school_route}' inserido no processo ")
+        return redirect('pias:pias_consult_view', student_id=student_id)
+
+    template_name = 'pias/student_school_route_add.html'
+    context = {
+        'form': form,
+        'student': student,
+    }
+    return render(request, template_name, context)
+
+
+@login_required(login_url='/users/login/')
+def student_school_route_delete_view(request, student_id, school_route_id):
+    """Apaga um documento do PIA do aluno indicado"""
+    school_route = get_object_or_404(StudentSchoolRoute, id=school_route_id)
+    student = get_object_or_404(Student, id=student_id)
+    # create object of form
+    if request.method == 'POST':
+        messages.success(request, f"'Percurso Escolar '{school_route}' removido com sucesso ")
+        # remove o registo da base de dados e o ficheiro do diretório
+        school_route.delete()
+        return redirect('pias:pias_consult_view', student_id=student_id)
+
+    template_name = 'pias/student_school_route_delete.html'
+    context = {
+        'student': student,
+        'school_route': school_route,
+    }
+    return render(request, template_name, context)
+
+
+@login_required(login_url='/users/login/')
+def student_school_route_edit_view(request, student_id, school_route_id):
+    """Edita ano letivo e escola no percurso escolar do aluno"""
+    student = get_object_or_404(Student, id=student_id)
+    school_route = get_object_or_404(StudentSchoolRoute, id=school_route_id)
+    form = StudentSchoolRouteEditForm(request.POST or None, instance=school_route)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            sr = form.save(commit=False)
+            sr.save()
+            return redirect('pias:pias_consult_view', student_id=student_id)
+
+    template_name = 'pias/student_school_route_edit.html'
+    context = {
+        'form': form,
+        'student': student,
+        'school_route': school_route,
+    }
+    return render(request, template_name, context)
+
 
 
 

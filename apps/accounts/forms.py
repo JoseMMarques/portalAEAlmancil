@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashField,\
+    AdminPasswordChangeForm
 from django import forms
 from .models import User
 

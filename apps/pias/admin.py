@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import PiasType, PIAS
+from .models import PiasType, PIAS, StudentSchoolRoute
 
 
 class PiasAdmin(admin.ModelAdmin):
@@ -43,3 +43,28 @@ class PiasTypeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(PiasType, PiasTypeAdmin)
+
+
+class StudentSchoolRouteAdmin(admin.ModelAdmin):
+    """Definições do Ano Letivo no Admin"""
+
+    list_display = [
+        'student', 'get_school_year', 'school', 'created', 'modified'
+    ]
+    search_fields = [
+        'student', 'get_school_year', 'school', 'created', 'modified'
+    ]
+    list_filter = [
+        'student', 'school_year__name', 'school', 'created', 'modified'
+    ]
+
+    def get_school_year(self, obj):
+        return obj.school_year.name
+
+    # Allows column order sorting
+    get_school_year.admin_order_field = 'school_year'
+    # Renames column
+    get_school_year.short_description = 'Ano Letivo'
+
+
+admin.site.register(StudentSchoolRoute, StudentSchoolRouteAdmin)

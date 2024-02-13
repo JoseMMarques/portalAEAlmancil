@@ -6,7 +6,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <div class="container-fluid">
+            <div class="container-fluid" >
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>Processo Individual do Aluno</h1>
@@ -22,7 +22,7 @@
             </div><!-- /.container-fluid -->
         </section>
 
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="margin-top: 0">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
@@ -246,7 +246,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h6 class="text-center display-10">
-                                            <a href="{% url 'pias:pias_insert_view' student_id=student.id %}">
+                                            <a href="{% url 'pias:student_school_route_add_view' student_id=student.id %}">
                                                 | Inserir percurso |
                                             </a>
                                         </h6>
@@ -257,12 +257,12 @@
                                                     <td><strong>{{ sr.school_year }}</strong></td>
                                                     <td>{{ sr.school }}</td>
                                                     <td>
-                                                        <a href="#" class="small-box-footer">
+                                                        <a href="{% url 'pias:student_school_route_edit_view' student_id=student.id school_route_id=sr.id %}" class="small-box-footer">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="small-box-footer">
+                                                        <a href="{% url 'pias:student_school_route_delete_view' student_id=student.id school_route_id=sr.id %}" class="small-box-footer">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>

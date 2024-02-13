@@ -20,7 +20,7 @@
                                     {{ student.get_short_name }}
                                 </a>
                             </li>
-                            <li class="breadcrumb-item active">Inserir</li>
+                            <li class="breadcrumb-item active">Inserir Percurso</li>
                         </ol>
                     </div>
                 </div>
@@ -44,69 +44,39 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card card-primary">
-                                        <h2 class="text-center display-5">Inserir Documento no PIA</h2>
+                                        <h2 class="text-center display-5">Inserir Percurso Escolar</h2>
                                         <h6 class="text-center display-10">
                                             <a href="{% url 'pias:pias_consult_view' student_id=student.id %}">
                                                 | Voltar |
                                             </a>
                                         </h6>
-
                                         <form method="post" enctype="multipart/form-data" novalidate>
                                             {% csrf_token %}
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="card-body">
                                                         <div class="form-group">
                                                             <label><i class="fas fa-paperclip mr-1"></i>{{ form.school_year.label }}</label>
                                                             {% render_field form.school_year class="form-control" %}
                                                         </div>
-
-                                                        <div class="form-group">
-                                                            <label><i class="far fa-bookmark mr-1"></i>Tipo de documento</label>
-                                                            {% render_field form.type class="form-control" placeholder=form.type.label %}
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label><i class="far fa-file-alt mr-1"></i>Nome</label>
-                                                            {% render_field form.name class="form-control" placeholder="Nome do documento" %}
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label><i class="far fa-calendar-check mr-1"></i>Data do documento</label>
-                                                            {% render_field form.doc_date class="form-control" placeholder="formato: aaaa-mm-dd" %}
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label><i class="far fa-file-pdf mr-1"></i>Ficheiro PDF</label>
-                                                            {% render_field form.uploaded_to class="form-control-file" placeholder="Escolha o ficheiro" %}
-                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-6">
+                                                <div class="col-8">
                                                     <div class="card-body">
-
                                                         <div class="form-group">
-                                                            <label><i class="fas fa-file-signature mr-1"></i>Notas</label>
-                                                            {% render_field form.description class="form-control" placeholder="Descrição curta do conteúdo do documento" %}
+                                                            <label><i class="fas fa-graduation-cap"></i> Agrupamento/Escola</label>
+                                                            {% render_field form.school class="form-control" placeholder="Nome da Escola e/ou do Agrupamento de Escolas " %}
                                                         </div>
-
-                                                        <div class="form-group">
-                                                            <label><i class="far fa-copy mr-1"></i>Documentos relacionados</label>
-                                                            {% render_field form.related_docs class="form-control" placeholder=form.related_docs.label %}
-                                                        </div>
-
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button type="submit" class="btn btn-success">Inserir Documento</button>
+                                                <button type="submit" class="btn btn-success">Inserir Percurso</button>
                                                 <a class="btn btn-danger float-right" href="{% url 'pias:pias_consult_view' student_id=student.id %}">
                                                     Cancelar
                                                 </a>
                                             </div>
                                         </form>
-
                                     </div>
                                 </div>
                             </div>

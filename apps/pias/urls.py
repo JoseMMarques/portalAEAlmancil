@@ -14,7 +14,9 @@ urlpatterns = [
     path('<student_id>/<doc_id>/consultar/', views.pias_document_detail_view, name="pias_document_detail_view"),
     path('<student_id>/<doc_id>/editar/', views.pias_edit_view, name="pias_edit_view"),
     path('<student_id>/<doc_id>/remover/', views.pias_delete_view, name="pias_delete_view"),
-
+    path('<student_id>/inserir-percurso/', views.student_school_route_add_view, name="student_school_route_add_view"),
+    path('<student_id>/<school_route_id>/editar-percurso/', views.student_school_route_edit_view, name="student_school_route_edit_view"),
+    path('<student_id>/<school_route_id>/remover-percurso/', views.student_school_route_delete_view, name="student_school_route_delete_view"),
     #path("consulta/", views.pias_home, name="pias_home"),
     #path("upload/", views.pias_home, name="pias_home"),
 ]

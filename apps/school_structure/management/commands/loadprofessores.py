@@ -47,7 +47,7 @@ class Command(BaseCommand):
                     type="TEACHER",
                 )
                 user = User.objects.get(process_number=fields[0])
-                user.set_password(fields[6])
+                user.set_password(fields[7])
                 user.save()
                 TeacherMore.objects.create(
                     user=user,

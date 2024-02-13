@@ -8,9 +8,12 @@ from .models import User
 
 def login_view(request):
     """ ‘Login’ do utilizador na plataforma """
-
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
+        username = form['username']
+        password = form['password']
+        print(username)
+        print(password)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -22,7 +25,7 @@ def login_view(request):
             else:
                 messages.error(request, "Utilizador e/ou password inválidos!")
         else:
-            messages.error(request, "Utilizador e/ou password inválidos!")
+            messages.error(request, "BOOOOLASSS Utilizador e/ou password inválidos!")
     form = AuthenticationForm()
     template_name = "accounts/login.html"
     context = {"form": form}

@@ -1,0 +1,25 @@
+Serve o presente documento para informar sobre a ordem
+com que devem ser carregados os Modelos na DB
+
+Ordem de carregamento:
+
+1. loadanosletivos -> carrega Anos Letivos para a DB
+   'Execução do comando na consola: python manage.py loadanosletivos.'
+
+2. loadescolas -> carrega Escolas para a DB
+   'Execução do comando na consola: python manage.py loadescolas.'
+
+3. loadprofessores -> carrega Professores para a DB
+   'Execução do comando na consola: python manage.py loadprofessores.'
+
+4. loadalunos -> carrega Alunos para a DB
+   'Execução do comando na consola: python manage.py loadalunos.'
+
+5. loaddisciplinas -> carrega Disciplinas para a DB
+   'Execução do comando na consola: python manage.py loaddisciplinas.'
+
+6. loadturmas -> carrega Turmas para a DB
+   'Execução do comando na consola: python manage.py loadturmas.'
+
+7. loadcargosdts -> carrega CargosDT para a DB
+   'Execução do comando na consola: python manage.py loadcargosdts.'

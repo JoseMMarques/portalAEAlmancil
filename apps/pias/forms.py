@@ -1,7 +1,6 @@
-from django.forms import ClearableFileInput
 from django import forms
 
-from .models import PIAS
+from .models import PIAS, StudentSchoolRoute
 
 
 class PiasConsultForm(forms.Form):
@@ -48,10 +47,20 @@ class PiasEditForm(forms.ModelForm):
         if student_id:
             self.fields['related_docs'].queryset = PIAS.objects.filter(student_id=student_id).exclude(id=doc_id)
 
-        # if doc_id:
-        #     doc = PIAS.objects.get(id=doc_id)
-        #     self.fields['uploaded_to'].widget.attrs.update(
-        #         {'analytics_logger_id': doc.id, 'filename': doc.get_absolute_url(), }
-        #     )
+
+class StudentSchoolRouteAddForm(forms.ModelForm):
+    """ Formulário para inserir novo percurso escolar do aluno no Pias"""
+    class Meta:
+        model = StudentSchoolRoute
+        fields = [
+            'school_year', 'school',
+        ]
 
 
+class StudentSchoolRouteEditForm(forms.ModelForm):
+    """ Formulário para editar o percurso escolar do aluno no Pias"""
+    class Meta:
+        model = StudentSchoolRoute
+        fields = [
+            'school_year', 'school',
+        ]
