@@ -53,7 +53,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)     # importante!
             messages.success(request, 'A sua password foi atualizada com sucesso!')
-            return redirect('plataforma_aealmancil')
+            return redirect('user_homepage')
         else:
             messages.error(request, 'Corrija os erros abaixo indicados!')
     else:
