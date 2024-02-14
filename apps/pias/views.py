@@ -29,7 +29,6 @@ def pias_view(request):
 
     # Pesquisa de pias para administrador ou membro da equip PIAS
     if request.user.is_admin or request.user.is_pias:
-        pass
         # create object of form
         form = PiasConsultForm(request.POST or None)
         if request.method == 'POST':
@@ -60,11 +59,14 @@ def pias_view(request):
     ano_letivo = get_school_year_by_today_date(now)
     # verifica se o utilizador é DT nesse ano letivo
     school_year = get_object_or_404(SchoolYear, name=ano_letivo)
-    is_dt = get_object_or_404(
-        CargoDT,
-        teacher_dt=request.user,
-        school_year=school_year
-    )
+    try:
+        is_dt = CargoDT.objects.get(
+            teacher_dt=request.user,
+            school_year=school_year
+        )
+    except:
+        is_dt = False
+
     if is_dt:
         # professor DT -> devolve lista dos PIAS dos seus alunos apenas!
         students = StudentSchoolClass.objects.filter(
@@ -78,6 +80,10 @@ def pias_view(request):
             'students': students,
         }
         return render(request, template_name, context)
+    else:
+        # não tem permissão para ver pias, fica na homepage
+        template_name = 'core/user_homepage.html'
+        return render(request, template_name)
 
 
 @login_required(login_url='/users/login/')
