@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
@@ -25,7 +25,7 @@ def login_view(request):
             else:
                 messages.error(request, "Utilizador e/ou password inválidos!")
         else:
-            messages.error(request, "BOOOOLASSS Utilizador e/ou password inválidos!")
+            messages.error(request, "Utilizador e/ou password inválidos!")
     form = AuthenticationForm()
     template_name = "accounts/login.html"
     context = {"form": form}
