@@ -24,6 +24,9 @@ def get_school_year_by_today_date(data):
     return ano_letivo
 
 
+# todo: colocar mais decorators e reformular código
+@is_dt_or_is_admin_required
+@login_required(login_url='/users/login/')
 def pias_view(request):
     """ View aue controla a página de consulta dos PIAS """
 
@@ -106,6 +109,7 @@ def pias_consult_view(request, student_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_document_detail_view(request, student_id, doc_id):
     """Retorna todos os detalhes do documento e fornece link para visualizar o pdf"""
@@ -122,6 +126,7 @@ def pias_document_detail_view(request, student_id, doc_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_document_pdf_view(request, student_id, doc_slug):
     """ Mostra o documento numa janela à parte"""
@@ -135,6 +140,7 @@ def pias_document_pdf_view(request, student_id, doc_slug):
         return response
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_insert_view(request, student_id):
     """ View aue insere novos documentos nos PIAS """
@@ -156,6 +162,7 @@ def pias_insert_view(request, student_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_delete_view(request, student_id, doc_id):
     """Apaga um documento do PIA do aluno indicado"""
@@ -177,6 +184,7 @@ def pias_delete_view(request, student_id, doc_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_edit_view(request, student_id, doc_id):
     """ View aue insere novos documentos nos PIAS """
@@ -216,6 +224,7 @@ def pias_edit_view(request, student_id, doc_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def student_school_route_add_view(request, student_id):
     """ View aue insere novos documentos nos PIAS """
@@ -236,6 +245,7 @@ def student_school_route_add_view(request, student_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def student_school_route_delete_view(request, student_id, school_route_id):
     """Apaga um documento do PIA do aluno indicado"""
@@ -256,6 +266,7 @@ def student_school_route_delete_view(request, student_id, school_route_id):
     return render(request, template_name, context)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def student_school_route_edit_view(request, student_id, school_route_id):
     """Edita ano letivo e escola no percurso escolar do aluno"""
