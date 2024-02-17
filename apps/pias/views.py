@@ -12,14 +12,14 @@ from .models import PIAS, StudentSchoolRoute
 from apps.accounts.models import Student
 from apps.school_structure.models import CargoDT, SchoolYear, \
     StudentSchoolClass
+from .decorators import is_dt_or_is_admin_required
 
 
 def get_school_year_by_today_date(data):
     """Determina o ano letivo de uma determinada data"""
-    ano_letivo = ""
     if data.month > 8:
         ano_letivo = "{}/{}".format(data.year, data.year+1)
-    if data.month < 9:
+    else:
         ano_letivo = "{}/{}".format(data.year-1, data.year)
     return ano_letivo
 
@@ -86,6 +86,7 @@ def pias_view(request):
         return render(request, template_name)
 
 
+@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_consult_view(request, student_id):
     """ View aue controla a página de resultados dos PIAS pesquisados """
