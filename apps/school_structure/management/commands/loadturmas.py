@@ -51,7 +51,6 @@ class Command(BaseCommand):
                 )
                 school_class = SchoolClass.objects.get(name=fields[4], school_year__name=fields[0])
                 students = fields[3].split(';')
-
                 if students != ['']:
                     for n, student in enumerate(students):
                         try:
@@ -65,7 +64,7 @@ class Command(BaseCommand):
                                 student=stu,
                                 school_class=school_class,
                                 school_year=school_year,
-                                class_number=n,
+                                class_number=n+1,   # para não começar com o número 0
                             )
 
                 self.stdout.write(

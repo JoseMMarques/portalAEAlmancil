@@ -100,6 +100,8 @@
                                                                         <th>Nº Processo</th>
                                                                         <th>Nome</th>
                                                                         <th>Turma</th>
+                                                                        <th>Nº</th>
+                                                                        <th>DT</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -112,7 +114,8 @@
                                                                                 </a>
                                                                             </td>
                                                                             <td>{{ student.Alunos_turma.last.school_class }}</td>
-
+                                                                            <td>{{ student.Alunos_turma.last.class_number }}</td>
+                                                                            <td>{{ student.Alunos_turma.last.school_class.cargodt }}</td>
                                                                         </tr>
                                                                     {% endfor %}
                                                                 </tbody>

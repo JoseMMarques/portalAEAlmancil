@@ -25,7 +25,6 @@ def get_school_year_by_today_date(data):
 
 
 # todo: colocar mais decorators e reformular código
-@is_dt_or_is_admin_required
 @login_required(login_url='/users/login/')
 def pias_view(request):
     """ View aue controla a página de consulta dos PIAS """
@@ -68,7 +67,7 @@ def pias_view(request):
             school_year=school_year
         )
     except:
-        is_dt = False
+        return redirect('forbidden_403')
 
     if is_dt:
         # professor DT -> devolve lista dos PIAS dos seus alunos apenas!
