@@ -13,7 +13,7 @@ def remove_accents(input_str):
 
 
 def path_and_rename(instance, filename):
-    """ Funtion to rename de uploaded file in the PIAS model"""
+    """ Funtion to rename de uploaded file in the PIAS model """
 
     # converte a data e tempo atual em string
     # vai servir como 'id', para tornar o nome do ficheiro único
